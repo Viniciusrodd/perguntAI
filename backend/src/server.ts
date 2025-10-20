@@ -1,9 +1,13 @@
 
 // imports
-import { Application } from 'express';
+import { Application, json, urlencoded, Router } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import hpp from 'hpp';
+import compression from 'compression';
+
+// import router
+import { router } from './routes/routes';
 
 
 // utils
@@ -20,15 +24,54 @@ export class Server {
       this.app = app;
    };
 
+
    // start methods
    public start(): void {
       this.startServer(this.app);
+      this.securityMiddlewares(this.app);
+      this.dataMiddlewaresConfig(this.app);
+      this.routerConfig(this.app);
    };
+
+
+   // security middlewares
+   private securityMiddlewares(app: Application): void {
+      app.use(hpp());
+      app.use(helmet());
+      app.use(cors({
+         origin: true, // any origin - for development
+         credentials: true,
+         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      }));
+
+      console.log('✅ security middlewares running');
+   };
+
+
+   // data middlewares config
+   private dataMiddlewaresConfig(app: Application): void {
+      app.use(compression());
+      app.use(json({ limit: '50mb' }));
+      app.use(urlencoded({
+         extended: true,
+         limit: '50mb'
+      }));
+
+      console.log('✅ data middlewares config running');
+   };
+
+
+   // route config
+   private routerConfig(app: Application): void {
+      app.use('/', router);
+      console.log('✅ router prefix defined');
+   };
+
 
    // start server
    private startServer(app: Application): void {
       app.listen(SERVER_PORT, () => {
-         console.log('Server initialize at port: ', SERVER_PORT);
+         console.log('✅ server running at port: ', SERVER_PORT);
       });
    };
 
