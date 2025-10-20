@@ -1,6 +1,6 @@
 
 // interfaces imports
-import { iStudyMaterial, iGenerationOptions, iUserAnswer } from "./user.interfaces";
+import { iStudyMaterial, iGenerationOptions, iUserAnswer } from "@interfaces/user.interfaces";
 
 
 // question - IA questions generation

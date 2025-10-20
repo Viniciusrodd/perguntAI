@@ -7,7 +7,11 @@ import hpp from 'hpp';
 import compression from 'compression';
 
 // import router
-import { router } from './routes/routes';
+import { router } from '@routes/routes';
+
+// import env
+import dotenv from 'dotenv';
+dotenv.config({});
 
 
 // utils
@@ -39,7 +43,7 @@ export class Server {
       app.use(hpp());
       app.use(helmet());
       app.use(cors({
-         origin: true, // any origin - for development
+         origin: process.env.CLIENT_URL, // any origin - for development
          credentials: true,
          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       }));
@@ -70,8 +74,8 @@ export class Server {
 
    // start server
    private startServer(app: Application): void {
-      app.listen(SERVER_PORT, () => {
-         console.log('✅ server running at port: ', SERVER_PORT);
+      app.listen(process.env.SERVER_PORT, () => {
+         console.log('✅ server running at port: ', process.env.SERVER_PORT);
       });
    };
 
