@@ -31,10 +31,10 @@ export class Server {
 
    // start methods
    public start(): void {
-      this.startServer(this.app);
       this.securityMiddlewares(this.app);
       this.dataMiddlewaresConfig(this.app);
       this.routerConfig(this.app);
+      this.startServer(this.app);
    };
 
 
@@ -43,7 +43,7 @@ export class Server {
       app.use(hpp());
       app.use(helmet());
       app.use(cors({
-         origin: process.env.CLIENT_URL, // any origin - for development
+         origin: 'any', // any origin - for development
          credentials: true,
          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       }));

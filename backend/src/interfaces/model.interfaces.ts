@@ -8,7 +8,7 @@ export interface iQuestion {
    id: string;
    prompt: string;
    acceptableAnswers: string[]; // correct answers
-   type: 'open' | 'multipleChoice';
+   type: 'open' | 'multipleChoice' | 'mix';
    choices?: string[];
 };
 

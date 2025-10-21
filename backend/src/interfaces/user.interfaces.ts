@@ -9,9 +9,8 @@ export interface iGenerationOptions {
 
 // study material - user question text
 export interface iStudyMaterial {
-   title?: string;
    text: string;
-   createdAt: String;
+   createdAt?: String;
 };
 
 // user answer - user indivual questions response
