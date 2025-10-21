@@ -1,10 +1,12 @@
 
 // imports
+import { v4 as uuid } from 'uuid';
 import { Request, Response } from "express";
 
 // import interfaces
 import { iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces";
 import { iApiResponse } from "@interfaces/apiResponse.interface";
+import { iQuestion, iQuestionsSet } from "@interfaces/model.interfaces";
 
 // import services
 import { modelService } from "@root/services/model.service";
@@ -28,16 +30,34 @@ export class GenerationController {
 
    
    // generation question - public
-   public async questionGeneration(req: Request, res: Response): Promise<void> {
+   public async questionGeneration(
+      req: Request, 
+      res: Response<iApiResponse>
+   ): Promise<Response> {
       // call private building methods...
       await this.generationOptions(req, res);
       await this.generationMaterial(req, res);
 
       // call ollama request service with question set
-      await modelService.ollamaRequest(
+      const questions: iQuestion[] = await modelService.ollamaRequest(
          this.questionOptions, 
          this.studyMaterial
       );
+
+      // final questions set
+      const questionSet: iQuestionsSet = {
+         id: uuid(),
+         material: this.studyMaterial,
+         options: this.questionOptions,
+         questions,
+         generatedAt: new Date().toISOString().split('T')[0]
+      }
+
+      return res.status(200).send({
+         success: true,
+         message: '✅ Questions generated successfully',
+         data: questionSet
+      });
    };
 
 

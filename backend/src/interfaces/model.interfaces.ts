@@ -19,7 +19,7 @@ export interface iQuestionsSet {
    material: iStudyMaterial;
    options: iGenerationOptions;
    questions: iQuestion[];
-   generatedAt: Date;
+   generatedAt: String;
 };
 
 
