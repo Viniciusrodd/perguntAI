@@ -107,6 +107,7 @@ class ModelService {
                - Compare the user's response ${userResponse} against the 
                "acceptableAnswers" ${questionSession.questionSet.questions} field 
                of that question (case-insensitive and allowing close synonyms).
+               - Your feedback will be in this language: ${questionSession.questionSet.options.language}
 
             Rules:
                1. Return only plain JSON (no explanations, no markdown, no comments).

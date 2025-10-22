@@ -5,12 +5,12 @@ import { iUserAnswer } from "@interfaces/user.interfaces";
 
 
 // evaluation interface - final avaliation
-interface iEvaluationResult {
+export interface iEvaluationResult {
    totalQuestions: number;
    correctAnswers: number;
    incorrectAnswers: number;
    accuracy: number; // (0-100)%
-   generatedAt: Date;
-   exerciseSet: iQuestionsSet;
+   generatedAt: String;
+   questionSet: iQuestionsSet;
    userAnswers: iUserAnswer[];
 };
