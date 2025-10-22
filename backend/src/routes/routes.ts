@@ -4,6 +4,7 @@ import { Router, Request, Response } from "express";
 
 // import controllers
 import { generationController } from "@root/controllers/generation.controller";
+import { userController } from "@root/controllers/user.controller";
 
 // export router
 export const router: Router = Router();
@@ -11,3 +12,7 @@ export const router: Router = Router();
 
 // Model IA - routes
 router.post('/questions', generationController.questionGeneration.bind(generationController));
+
+
+// user - routes
+router.post('/answers/:questionId', userController.answerGeneration.bind(userController));

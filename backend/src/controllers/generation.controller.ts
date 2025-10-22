@@ -13,7 +13,7 @@ import { modelService } from "@root/services/model.service";
 
 
 // generation questions - class
-export class GenerationController {
+class GenerationController {
 
    // question options - setup
    private questionOptions: iGenerationOptions = {

@@ -104,7 +104,8 @@ class ModelService {
             Context:
                - You will receive the entire study session object ${questionSession}.
                - Use only the question whose "id" matches the provided questionId.
-               - Compare the user's response against the "acceptableAnswers" field 
+               - Compare the user's response ${userResponse} against the 
+               "acceptableAnswers" ${questionSession.questionSet.questions} field 
                of that question (case-insensitive and allowing close synonyms).
 
             Rules:
