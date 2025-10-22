@@ -9,4 +9,5 @@ import { generationController } from "@root/controllers/generation.controller";
 export const router: Router = Router();
 
 
+// Model IA - routes
 router.post('/questions', generationController.questionGeneration.bind(generationController));

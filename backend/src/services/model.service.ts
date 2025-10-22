@@ -3,8 +3,8 @@
 import axios from "axios";
 
 // import interfaces
-import { iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces";
-import { iQuestion} from "@interfaces/model.interfaces";
+import { iUserAnswer, iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces";
+import { iQuestion, iQuestionsSet, iQuestionSession } from "@interfaces/model.interfaces";
 
 // import error handler
 import { getErrorMessage } from "@root/utils/errorHandler";
@@ -19,8 +19,8 @@ dotenv.config({});
 class ModelService {
    getErrorMessage = getErrorMessage;
 
-   // ollama request - public
-   public async ollamaRequest(
+   // ollama question request - public
+   public async ollamaQuestionRequest(
       questionOptions: iGenerationOptions,
       studyMaterial: iStudyMaterial 
    ): Promise<iQuestion[]> {
@@ -75,8 +75,84 @@ class ModelService {
          return parsedResult;
       }
       catch(error: unknown){
-         console.log('Ollama request service internal error', this.getErrorMessage(error));
+         console.error('Ollama question request service internal error', this.getErrorMessage(error));
          return [];
+      }
+   };
+
+   
+   // ollama user response request - public
+   public async ollamaAnswerRequest(
+      questionId: string, 
+      userResponse: string,
+      questionSession: iQuestionSession
+
+   ): Promise<iUserAnswer> {
+      try{
+         // validations
+         if(questionId === '') throw new Error('❌ Question id is empty');
+         if(userResponse === '') throw new Error('❌ User response is empty');
+         if(questionSession.finished === true) throw new Error('❌ Question session already finished');
+
+         // prompt generation
+         const prompt: string = `         
+            You are an AI responsible for evaluating a student's answer in an active study session.
+
+            Evaluate whether the student's current response is correct or incorrect 
+            based on the original question set and its acceptable answers.
+
+            Context:
+               - You will receive the entire study session object ${questionSession}.
+               - Use only the question whose "id" matches the provided questionId.
+               - Compare the user's response against the "acceptableAnswers" field 
+               of that question (case-insensitive and allowing close synonyms).
+
+            Rules:
+               1. Return only plain JSON (no explanations, no markdown, no comments).
+               2. The JSON must be a single object following EXACTLY this format:
+                  {
+                     "questionId": "string (same as provided)",
+                     "userResponse": "string (student's answer)",
+                     "isCorrect": boolean,
+                     "feedback": "string (short feedback, optional if correct)"
+                  }
+               3. Mark as correct if the user's response matches or closely resembles 
+                  any acceptable answer (ignore case, accents, punctuation differences).
+               4. If incorrect or partially correct, return a short feedback string like:
+                  - "Almost correct, but missing a key detail."
+                  - "Incorrect. The correct answer is: <answer>."
+                  - "Close, but check the term <keyword>."
+               5. Do NOT modify the session or create new data.
+               6. Base your judgment strictly on the provided questionSession content.
+
+            Evaluate the following session data:
+            {
+               "questionId": "${questionId}",
+               "userResponse": "${userResponse}",
+               "questionSession": ${JSON.stringify(questionSession, null, 2)}
+            }
+         `
+
+         // get model response
+         const llm_response = await axios.post(process.env.OLLAMA_URL as string, {
+            'model': 'mistral',
+            'prompt': prompt,
+            'stream': false
+         });
+         const result = typeof llm_response.data === 'string' 
+         ? llm_response.data
+         : llm_response.data.response;
+
+         // clean result
+         const clean = result.trim();
+
+         // convert clean result to object
+         const parsedResult: iUserAnswer = JSON.parse(clean);
+         return parsedResult;
+      }
+      catch(error: unknown){
+         console.error('Ollama answer service internal error', this.getErrorMessage(error));
+         throw new Error(`Ollama answer service internal error: ${this.getErrorMessage(error)}`);
       }
    };
 

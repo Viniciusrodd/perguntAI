@@ -24,7 +24,7 @@ export interface iQuestionsSet {
 
 
 // exercise session - questions set + user answers 
-export interface iExerciseSession {
+export interface iQuestionSession {
    sessionId: string;
    questionSet: iQuestionsSet;
    answers: iUserAnswer[];

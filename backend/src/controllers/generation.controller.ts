@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 // import interfaces
 import { iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces";
 import { iApiResponse } from "@interfaces/apiResponse.interface";
-import { iQuestion, iQuestionsSet } from "@interfaces/model.interfaces";
+import { iQuestion, iQuestionsSet, iQuestionSession } from "@interfaces/model.interfaces";
 
 // import services
 import { modelService } from "@root/services/model.service";
@@ -23,6 +23,7 @@ export class GenerationController {
       language: 'português'
    };
 
+   // study material - setup
    private studyMaterial: iStudyMaterial = {
       text: '',
       createdAt: new Date().toISOString().split('T')[0]
@@ -38,8 +39,8 @@ export class GenerationController {
       await this.generationOptions(req, res);
       await this.generationMaterial(req, res);
 
-      // call ollama request service with question set
-      const questions: iQuestion[] = await modelService.ollamaRequest(
+      // call ollama request service with question set...
+      const questions: iQuestion[] = await modelService.ollamaQuestionRequest(
          this.questionOptions, 
          this.studyMaterial
       );
@@ -53,10 +54,19 @@ export class GenerationController {
          generatedAt: new Date().toISOString().split('T')[0]
       }
 
+      // set question session
+      const questionSession: iQuestionSession = {
+         sessionId: uuid(),
+         questionSet,
+         answers: [],
+         currentIndex: 1,
+         finished: false
+      };
+
       return res.status(200).send({
          success: true,
          message: '✅ Questions generated successfully',
-         data: questionSet
+         data: questionSession
       });
    };
 
@@ -66,7 +76,7 @@ export class GenerationController {
       req: Request, 
       res: Response<iApiResponse>
    ): Promise<void | Response> {
-      // check fields sended
+      // validation the requests
       const { numQuestions, difficulty, questionType, language } = req.body;
       const num = Number(numQuestions); // number convert
       if(!num || !difficulty || !questionType){
@@ -87,7 +97,7 @@ export class GenerationController {
       req: Request,
       res: Response<iApiResponse>
    ): Promise<void | Response> {
-      // check fields sended
+      // validation the requests
       const { text } = req.body;
       if(!text){
          return res.status(404).send({
