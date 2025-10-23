@@ -12,6 +12,7 @@
          "@routes/*": ["src/routes/*"], // routes
          "@interfaces/*": ["src/interfaces/*"], // interfaces
          "@utils/*": ["src/utils/*"], // utils
+         "@assets/*": ["src/assets/*"], // assets
          "@root/*": ["src/*"] // src files
       }
    }

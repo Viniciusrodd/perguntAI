@@ -10,6 +10,7 @@ import { iEvaluationResult } from "@interfaces/pdf.interfaces";
 
 // import services
 import { modelService } from "@root/services/model.service";
+import { pdfService } from "@root/services/pdf.service";
 
 
 // user controller - class
@@ -90,6 +91,13 @@ class UserController {
          questionSet: questionSession.questionSet,
          userAnswers: questionSession.answers
       };
+
+      // evalutaion PDF generation
+      pdfService.evaluationResultGeneration(evaluationResult)
+         .then(filepath => console.log('✅ PDF success generation in: ', filepath))
+         .catch(error => console.log('❌ PDF generation error: ', error));
+
+      // return evaluation result set
       return evaluationResult;
    };
 

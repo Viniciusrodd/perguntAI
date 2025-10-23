@@ -67,7 +67,8 @@ export const prompt_answer = (
                "questionId": "string (same as provided)",
                "userResponse": "string (student's answer)",
                "isCorrect": boolean,
-               "feedback": "string (short feedback, optional if correct)"
+               "feedback": "string (short feedback, optional if correct) and need be
+               is this language: ${questionSession.questionSet.options.language}"
             }
          3. Mark as correct if the user's response matches or closely resembles 
             any acceptable answer (ignore case, accents, punctuation differences).

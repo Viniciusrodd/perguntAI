@@ -11,6 +11,7 @@ import { pdfConfig } from "@root/config/pdf.config";
 import { iEvaluationResult } from '@interfaces/pdf.interfaces';
 
 
+
 // pdf service - class
 class PdfService {
 
@@ -28,6 +29,10 @@ class PdfService {
       const filePath = path.join(ouputDir, `evaluation-${Date.now()}.pdf`);
       const doc = new PDFDocument({ margin: 50 });
       
+      // font set
+      const fontPath = path.join(__dirname, '../assets/fonts/DejaVuSans.ttf');
+      doc.font(fontPath);
+
       // pdf metadatas
       doc.info.Title = pdfConfig.meta.title;
       doc.info.Author = pdfConfig.meta.author;
@@ -95,4 +100,4 @@ class PdfService {
    };
 
 };
-const pdfService: PdfService = new PdfService();
+export const pdfService: PdfService = new PdfService();
