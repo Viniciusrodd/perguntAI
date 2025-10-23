@@ -27,6 +27,7 @@
       "@types/cors": "^2.8.19",
       "@types/express": "^5.0.3",
       "@types/hpp": "^0.2.6",
+      "@types/pdfkit": "^0.17.3",
       "ts-node": "^10.9.2",
       "tsconfig-paths": "^4.2.0"
    }
