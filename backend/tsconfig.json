@@ -10,7 +10,8 @@
       "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
       "paths": {
          "@routes/*": ["src/routes/*"], // routes
-         "@interfaces/*": ["src/interfaces/*"], //interfaces
+         "@interfaces/*": ["src/interfaces/*"], // interfaces
+         "@utils/*": ["src/utils/*"], // utils
          "@root/*": ["src/*"] // src files
       }
    }
