@@ -17,10 +17,6 @@ import dotenv from 'dotenv';
 dotenv.config({});
 
 
-// utils
-const SERVER_PORT = 5111;
-
-
 // class - Server
 export class Server {
    // express instance

@@ -41,7 +41,7 @@ class UserController {
 
          return res.status(200).send({
             success: true,
-            message: '✅ Evaluation result successfully generated',
+            message: '✔️ Evaluation result successfully generated',
             data: evaluationResult
          });
       }
@@ -63,7 +63,7 @@ class UserController {
 
       return res.status(200).send({
          success: true,
-         message: '✅ Answer generated successfully',
+         message: '✔️ Answer generated successfully',
          data: userAnswerSet
       });
    };
@@ -94,7 +94,7 @@ class UserController {
 
       // evalutaion PDF generation
       pdfService.evaluationResultGeneration(evaluationResult)
-         .then(filepath => console.log('✅ PDF success generation in: ', filepath))
+         .then(filepath => console.log('✔️ PDF success generation in: ', filepath))
          .catch(error => console.log('❌ PDF generation error: ', error));
 
       // return evaluation result set

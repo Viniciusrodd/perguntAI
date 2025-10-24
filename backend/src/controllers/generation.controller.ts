@@ -65,7 +65,7 @@ class GenerationController {
 
       return res.status(200).send({
          success: true,
-         message: '✅ Questions generated successfully',
+         message: '✔️ Questions generated successfully',
          data: questionSession
       });
    };
