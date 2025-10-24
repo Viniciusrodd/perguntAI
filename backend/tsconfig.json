@@ -13,6 +13,7 @@
          "@interfaces/*": ["src/interfaces/*"], // interfaces
          "@utils/*": ["src/utils/*"], // utils
          "@assets/*": ["src/assets/*"], // assets
+         "@middlewares/*": ["src/middlewares/*"],
          "@root/*": ["src/*"] // src files
       }
    }

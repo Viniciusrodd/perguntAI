@@ -9,6 +9,9 @@ import compression from 'compression';
 // import router
 import { router } from '@routes/routes';
 
+// import middlewares
+import { loggingMiddleware } from '@middlewares/logging.middleware';
+
 // import env
 import dotenv from 'dotenv';
 dotenv.config({});
@@ -33,6 +36,7 @@ export class Server {
    public start(): void {
       this.securityMiddlewares(this.app);
       this.dataMiddlewaresConfig(this.app);
+      this.customMiddlewares(this.app);
       this.routerConfig(this.app);
       this.startServer(this.app);
    };
@@ -48,7 +52,7 @@ export class Server {
          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       }));
 
-      console.log('✅ security middlewares running');
+      console.log('✔️ security middlewares running');
    };
 
 
@@ -61,21 +65,28 @@ export class Server {
          limit: '50mb'
       }));
 
-      console.log('✅ data middlewares config running');
+      console.log('✔️ data middlewares config running');
+   };
+
+
+   // custom middlewares
+   private customMiddlewares(app: Application): void {
+      app.use(loggingMiddleware); // logging mid
+      console.log('✔️ custom middlewares running');
    };
 
 
    // route config
    private routerConfig(app: Application): void {
       app.use('/', router);
-      console.log('✅ router prefix defined');
+      console.log('✔️ router prefix defined');
    };
 
 
    // start server
    private startServer(app: Application): void {
       app.listen(process.env.SERVER_PORT, () => {
-         console.log('✅ server running at port: ', process.env.SERVER_PORT);
+         console.log('✔️ server running at port: ', process.env.SERVER_PORT);
       });
    };
 
