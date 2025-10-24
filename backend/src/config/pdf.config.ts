@@ -10,5 +10,10 @@ export const pdfConfig = {
    styles: {
       headerColor: "#003366",
       accentColor: "#007ACC",
+      blackColor: "#000",
+      greyColor: "#666666",
+      lightGreyColor: "#888",
+      greenColor: "#28a745",
+      redColor: "#d93025"
    }
 };

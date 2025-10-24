@@ -10,7 +10,7 @@ export interface iEvaluationResult {
    correctAnswers: number;
    incorrectAnswers: number;
    accuracy: number; // (0-100)%
-   generatedAt: String;
+   generatedAt: string | number | Date;
    questionSet: iQuestionsSet;
    userAnswers: iUserAnswer[];
 };
