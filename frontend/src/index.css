@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+*{
+   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+   margin: 0;
+   color: azure;
+   text-align: center;
+   transition: ease-in-out transform 0.2s;
+}
+
+html, body{
+   margin: 0;
+   padding: 0;
+   height: 100%;
+}

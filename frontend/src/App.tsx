@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // import pages
 import Welcome from './pages/Welcome';
-import Homepage from './pages/homepage';
+import Homepage from './pages/Homepage';
+
 
 // app
 function App() {
