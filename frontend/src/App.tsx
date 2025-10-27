@@ -1,11 +1,26 @@
+// import css
 import './App.css'
 
+// import hooks
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// import pages
+import Welcome from './pages/Welcome';
+import Homepage from './pages/homepage';
+
+// app
 function App() {
    return (
-      <>
-         <h1>Vite + React</h1>
-      </>
+      <div className='app'>
+         <BrowserRouter>
+            <Routes>
+               {/* welcome */}
+               <Route path='/' element={ <Welcome /> } />
+               {/* homepage */}
+               <Route path='/home' element={ <Homepage /> } />
+            </Routes>
+         </BrowserRouter>
+      </div>
    );
 };
-
 export default App;
