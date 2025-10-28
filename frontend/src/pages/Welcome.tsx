@@ -24,7 +24,7 @@ const Welcome = () => {
    // jsx
 
    return (
-      <div className={ styles.welcome_container }>
+      <div className='home_default_container'>
          <img 
             src={ welcome_robot_img } 
             alt="welcome_robot_image" 

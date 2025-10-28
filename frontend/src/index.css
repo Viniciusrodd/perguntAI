@@ -13,3 +13,21 @@ html, body{
    padding: 0;
    height: 100%;
 }
+
+.home_default_container{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   flex-direction: column;
+   height: 65vh;
+   width: 50vw;
+}
+
+.title_default{
+   font-size: 35px;
+   text-align: center;
+   font-style: italic;
+   letter-spacing: 1px;
+   width: 80%;
+   margin: 0px;
+}

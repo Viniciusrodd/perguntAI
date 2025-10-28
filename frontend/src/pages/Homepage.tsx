@@ -1,10 +1,14 @@
 
+// components
+import TextBase from "../components/home/TextBase";
+
 
 // homepage
 const Homepage = () => {
    return (
       <div>
-         <h1>Homepage</h1>
+         {/* text base */}
+         <TextBase />
       </div>
    );
 };

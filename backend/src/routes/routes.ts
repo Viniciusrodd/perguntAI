@@ -17,7 +17,7 @@ export const router: Router = Router();
 // Model IA - routes
 router.post(
    '/questions',
-   ollamaMiddleware, 
+   ollamaMiddleware,
    generationController.questionGeneration.bind(generationController)
 );
 

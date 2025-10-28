@@ -9,14 +9,6 @@
    --color5: #ba2d0b;
 }
 
-.welcome_container{
-   display: flex;
-   justify-content: flex-start;
-   align-items: center;
-   flex-direction: column;
-   height: 40vh;
-   width: 40vw;
-}
 
 .welcome_robot_img{
    height: 60px;
@@ -35,13 +27,12 @@
 .start_button{
    margin-top: 25px;
    height: 40px;
-   width: 22%;
+   width: 25%;
    border: none;
    border-radius: 10px;
    background-color: var(--color2);
    color: black;
    font-size: 14px;
-   letter-spacing: 1px;
    font-weight: bolder;
    text-transform: uppercase;
    cursor: pointer;
