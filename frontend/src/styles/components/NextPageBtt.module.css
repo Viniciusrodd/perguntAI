@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.arrow_down{
+   height: 35px;
+   width: 35px;
+   cursor: pointer;
+   transition: ease-in-out transform 0.2s;
+}
+.arrow_down:hover{
+   transform: scale(1.08);
+}

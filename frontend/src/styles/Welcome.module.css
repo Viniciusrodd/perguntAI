@@ -10,6 +10,15 @@
 }
 
 
+.welcome_container{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   flex-direction: column;
+   height: 45vh;
+   width: 50vw;
+}
+
 .welcome_robot_img{
    height: 60px;
    width: 55px;

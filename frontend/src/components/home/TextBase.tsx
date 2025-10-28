@@ -2,9 +2,9 @@
 // import css
 import styles from '../../styles/home/TextBase.module.css';
 
-// import images
-import arrow_down from '../../../public/images/home/arrow_down.png';
-import exit from '../../../public/images/home/exit.png';
+// import components
+import NextPageBtt from '../NextPageBtt';
+import ExitBtt from '../ExitBtt';
 
 
 // text base
@@ -26,19 +26,11 @@ const TextBase = () => {
             <p>*esse texto servirá de base para as questões</p>
          </div>
 
-         <img 
-            src={ arrow_down } 
-            alt="arrow down"
-            className={ styles.arrow_down }
-         />
+         { /* next page button */ }
+         <NextPageBtt />
 
-         <div className={ styles.exit_container }>
-            <img 
-               src={ exit } 
-               alt="exit"
-               className={ styles.exit }
-            />
-         </div>
+         { /* exit button */ }
+         <ExitBtt />
       </div>
    );
 };

@@ -31,3 +31,43 @@ html, body{
    width: 80%;
    margin: 0px;
 }
+
+
+/* tooltip */
+
+
+.tooltip_btt{
+   background-color: transparent;
+   border: none;
+   transition: ease-in-out transform 0.2s;
+}
+.tooltip_btt:hover{
+   transform: scale(1.08);
+}
+
+.tooltip {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+}
+
+.tooltip::after {
+   content: attr(data-tooltip);
+   position: absolute;
+   bottom: 120%; /* acima do elemento */
+   left: 50%;
+   transform: translateX(-50%);
+   background: #333;
+   color: #fff;
+   padding: 6px 15px;
+   border-radius: 6px;
+   font-size: 13px;
+   white-space: nowrap;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.3s ease;
+}
+
+.tooltip:hover::after {
+   opacity: 1;
+}

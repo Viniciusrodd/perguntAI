@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.exit_container{
+   display: flex;
+   justify-content: flex-start;
+   height: 5vh;
+   width: 75%;
+   margin-top: 20px;
+}
+
+.exit{
+   height: 30px;
+   width: 30px;
+   cursor: pointer;
+   transition: ease-in-out transform 0.2s;
+}
