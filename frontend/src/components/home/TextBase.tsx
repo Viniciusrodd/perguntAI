@@ -27,7 +27,7 @@ const TextBase = () => {
          </div>
 
          { /* next page button */ }
-         <NextPageBtt />
+         <NextPageBtt destiny='questionsNumber' />
 
          { /* exit button */ }
          <ExitBtt />

@@ -18,7 +18,7 @@ function App() {
                {/* welcome */}
                <Route path='/' element={ <Welcome /> } />
                {/* homepage */}
-               <Route path='/home' element={ <Homepage /> } />
+               <Route path='/home/:destiny' element={ <Homepage /> } />               
             </Routes>
          </BrowserRouter>
       </div>
