@@ -19,8 +19,17 @@ html, body{
    justify-content: flex-start;
    align-items: center;
    flex-direction: column;
-   height: 65vh;
-   width: 50vw;
+   height: 70vh;
+   width: 70vw;
+}
+
+.questions_default_container{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   flex-direction: column;
+   height: 70vh;
+   width: 90vw;
 }
 
 .title_default{
@@ -28,8 +37,16 @@ html, body{
    text-align: center;
    font-style: italic;
    letter-spacing: 1px;
-   width: 80%;
+   width: 45%;
    margin: 0px;
+}
+
+input:focus{
+   outline: none;
+}
+
+select:focus{
+   outline: none;
 }
 
 

@@ -3,20 +3,27 @@
 import styles from '../styles/components/ExitBtt.module.css';
 
 // import images
-import exit from '../../public/images/home/exit.png';
+import exit from '../../public/images/home/exit_arrow.png';
 
 // import hooks
 import { useNavigate } from 'react-router-dom';
+import type React from 'react';
+
+// interfaces
+interface iExitBtt {
+   destiny: string;
+};
 
 
 // exit btt
-const ExitBtt = () => {
+const ExitBtt: React.FC<iExitBtt> = ({ destiny }) => {
    // variables
    const navigate = useNavigate();
 
    // functions
    const exit_btt = () =>{
-      navigate('/');
+      if(destiny === 'welcome') navigate('/')
+      else navigate(`/home/${destiny}`);
    };
 
    // jsx

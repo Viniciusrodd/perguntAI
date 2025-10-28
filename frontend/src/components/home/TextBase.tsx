@@ -6,7 +6,6 @@ import styles from '../../styles/home/TextBase.module.css';
 import NextPageBtt from '../NextPageBtt';
 import ExitBtt from '../ExitBtt';
 
-
 // text base
 const TextBase = () => {
    return (
@@ -30,7 +29,7 @@ const TextBase = () => {
          <NextPageBtt destiny='questionsNumber' />
 
          { /* exit button */ }
-         <ExitBtt />
+         <ExitBtt destiny='welcome' />
       </div>
    );
 };

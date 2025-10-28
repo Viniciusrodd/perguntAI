@@ -3,6 +3,7 @@
 .arrow_down{
    height: 35px;
    width: 35px;
+   margin-top: 20px;
    cursor: pointer;
    transition: ease-in-out transform 0.2s;
 }

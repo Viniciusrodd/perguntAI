@@ -1,4 +1,6 @@
 
+// import css
+
 // components
 import TextBase from "../components/home/TextBase";
 import QuestionsNumber from "../components/home/QuestionsNumber";
@@ -17,22 +19,8 @@ const Homepage = () => {
 
    return (
       <div>
-         { 
-            destiny === 'textBase' ? (
-               <>               
-                  {/* text base */}
-                  <TextBase />
-               </>
-            ) : null
-         }
-         {
-            destiny === 'questionsNumber' ? (
-               <>               
-                  {/* questions number */}
-                  <QuestionsNumber />
-               </>
-            ) : null
-         }
+         { destiny === 'textBase' && <TextBase /> }
+         { destiny === 'questionsNumber' && <QuestionsNumber /> }
       </div>
    );
 };

@@ -1,2 +1,25 @@
 @charset "UTF-8";
 
+:root{
+   --color1: #0e1116;
+   --color2: #b8e3e9;
+   --color2b: #a0d1d8;
+   --color3: #407899;
+   --color4: #95c623;
+   --color5: #ba2d0b;
+}
+
+.questionsNumber_container{
+   padding: 10px 0px 10px 0px;
+   width: 40vw;
+   margin: 15px 0px 15px 0px;
+}
+
+.questions_select{
+   height: 45px;
+   width: 90%;
+   background-color: var(--color1);
+   border: 2px solid white;
+   border-radius: 8px;
+   cursor: pointer;
+}
