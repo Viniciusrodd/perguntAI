@@ -18,7 +18,7 @@ const ProgressBar = () => {
          <div className={
             destiny === 'questionsNumber' ? styles.questionsNumber :
             destiny === 'difficulty' ? styles.difficulty :
-            destiny === 'questionType' ? styles.questionType :
+            destiny === 'questionsType' ? styles.questionsType :
             destiny === 'language' ? styles.language 
             : styles.questionsNumber // fallback
          }></div>      

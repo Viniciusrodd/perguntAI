@@ -5,6 +5,7 @@
 import TextBase from "../components/home/TextBase";
 import QuestionsNumber from "../components/home/QuestionsNumber";
 import Difficulty from "../components/home/Difficulty";
+import QuestionsType from "../components/home/QuestionsType";
 
 // hooks
 import { useParams } from "react-router-dom";
@@ -24,6 +25,7 @@ const Homepage = () => {
          { destiny === 'textBase' && <TextBase /> }
          { destiny === 'questionsNumber' && <QuestionsNumber /> }
          { destiny === 'difficulty' && <Difficulty /> }
+         { destiny === 'questionsType' && <QuestionsType /> }
       </div>
    );
 };
