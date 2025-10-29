@@ -9,10 +9,10 @@
    --color5: #ba2d0b;
 }
 
-.questionsNumber_container{
+.questions_container{
    padding: 10px 0px 10px 0px;
    width: 40vw;
-   margin: 15px 0px 15px 0px;
+   margin: 15px 0px 35px 0px;
 }
 
 .questions_select{

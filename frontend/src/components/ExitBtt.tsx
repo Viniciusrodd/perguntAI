@@ -32,7 +32,7 @@ const ExitBtt: React.FC<iExitBtt> = ({ destiny }) => {
       <div className={ styles.exit_container }>
          <button 
             type='button' 
-            data-tooltip='Sair' 
+            data-tooltip='Voltar' 
             className={`tooltip_btt tooltip`}
             onClick={ exit_btt }>
             <img 

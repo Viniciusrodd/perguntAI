@@ -3,7 +3,7 @@
 import styles from '../styles/components/NextPageBtt.module.css';
 
 // import images
-import arrow_down from '../../public/images/home/arrow_down.png';
+import next from '../../public/images/home/next_2.png';
 import type React from 'react';
 
 // import hooks
@@ -35,9 +35,9 @@ const NextPageBtt: React.FC<iNextPageBtt> = ({ destiny }) => {
             className={`tooltip_btt tooltip`}
             onClick={ next_btt }>
             <img 
-               src={ arrow_down } 
+               src={ next } 
                alt="arrow down"
-               className={ styles.arrow_down }
+               className={ styles.next }
             />
          </button>
       </div>

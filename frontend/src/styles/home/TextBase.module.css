@@ -12,7 +12,7 @@
 .textarea_container{
    height: 70vh;
    width: 40vw;
-   margin-top: 15px;
+   margin: 15px 0px 35px 0px;
 
    & p{
       font-style: italic;

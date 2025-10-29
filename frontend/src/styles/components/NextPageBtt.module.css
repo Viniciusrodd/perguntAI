@@ -1,12 +1,11 @@
 @charset "UTF-8";
 
-.arrow_down{
+.next{
    height: 35px;
    width: 35px;
-   margin-top: 20px;
    cursor: pointer;
    transition: ease-in-out transform 0.2s;
 }
-.arrow_down:hover{
+.next:hover{
    transform: scale(1.08);
 }

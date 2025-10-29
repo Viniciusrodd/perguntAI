@@ -8,40 +8,33 @@ import ExitBtt from '../ExitBtt';
 import ProgressBar from '../ProgressBar';
 
 
-// questions number
-const QuestionsNumber = () => {
+// difficulty
+const Difficulty = () => {
    return (
       <div className='questions_default_container'>
-         { /* progress bar 25% */ }
+         { /* progress bar 50% */ }
          <ProgressBar />
 
          <h1 className='title_default'>
-            Quantas questões deseja ?
+            Qual deve ser a dificuldade ?
          </h1>
 
          <div className={ styles.questions_container }>
             <select title='questions' name="questions" className={ styles.questions_select }>
                <option value="" selected>Selecione uma opção</option>
-               <option value="1">1</option>
-               <option value="2">2</option>
-               <option value="3">3</option>
-               <option value="4">4</option>
-               <option value="5">5</option>
-               <option value="6">6</option>
-               <option value="7">7</option>
-               <option value="8">8</option>
-               <option value="9">9</option>
-               <option value="10">10</option>
+               <option value="basic">Básica</option>
+               <option value="intermediate">Intermediária</option>
+               <option value="advanced">Avançada</option>
             </select>
          </div>
 
          { /* next page button */ }
-         <NextPageBtt destiny='difficulty' />
+         <NextPageBtt destiny='questionType' />
 
          { /* exit button */ }
-         <ExitBtt destiny='textBase' />
+         <ExitBtt destiny='questionsNumber' />
       </div>
    );
 };
 
-export default QuestionsNumber;
+export default Difficulty;
