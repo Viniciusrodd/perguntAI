@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+:root{
+   --color1: #0e1116;
+   --color2: #b8e3e9;
+   --color2b: #a0d1d8;
+   --color3: #407899;
+   --color4: #95c623;
+   --color5: #ba2d0b;
+}
+
 *{
    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
    margin: 0;
@@ -59,7 +68,7 @@ select:focus{
    transition: ease-in-out transform 0.2s;
 }
 .tooltip_btt:hover{
-   transform: scale(1.08);
+   transform: scale(1.05);
 }
 
 .tooltip {
@@ -74,7 +83,8 @@ select:focus{
    bottom: 120%; /* acima do elemento */
    left: 50%;
    transform: translateX(-50%);
-   background: #333;
+   background: var(--color1);
+   border: 2px solid var(--color3);
    color: #fff;
    padding: 6px 15px;
    border-radius: 6px;

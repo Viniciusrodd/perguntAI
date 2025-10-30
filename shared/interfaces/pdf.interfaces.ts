@@ -1,7 +1,7 @@
 
 // interfaces imports
-import { iQuestionsSet } from "@interfaces/model.interfaces";
-import { iUserAnswer } from "@interfaces/user.interfaces";
+import { iQuestionsSet } from "./model.interfaces";
+import { iUserAnswer } from "./user.interfaces";
 
 
 // evaluation interface - final avaliation

@@ -7,5 +7,5 @@
    transition: ease-in-out transform 0.2s;
 }
 .next:hover{
-   transform: scale(1.08);
+   transform: scale(1.00);
 }
