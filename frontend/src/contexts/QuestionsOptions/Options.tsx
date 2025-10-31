@@ -19,13 +19,15 @@ export const OptionsProvider = ({ children }: OptionsPropsProvider) =>{
    const [ difficulty, setDifficulty ] = useState<string>('');
    const [ questionType, setQuestionType ] = useState<string>('');
    const [ language, setLanguage ] = useState<string>('');
+   const [ text, setText ] = useState<string>('');
 
    return(
       <OptionsContext.Provider value={{ 
          numQuestions, setNumQuestions,
          difficulty, setDifficulty,
          questionType, setQuestionType,
-         language, setLanguage 
+         language, setLanguage,
+         text, setText
       }}>
          { children }
       </OptionsContext.Provider>

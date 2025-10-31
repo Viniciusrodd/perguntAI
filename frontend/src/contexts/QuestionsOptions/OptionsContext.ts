@@ -12,6 +12,8 @@ export type OptionsContextType = {
    setQuestionType: (type: string) => void;
    language: string;
    setLanguage: (lang: string) => void;
+   text: string;
+   setText: (text: string) => void;
 };
 
 // options context
@@ -23,5 +25,7 @@ export const OptionsContext = createContext<OptionsContextType>({
    questionType: '',
    setQuestionType: () => {},
    language: '',
-   setLanguage: () => {}
+   setLanguage: () => {},
+   text: '',
+   setText: () => {}
 });

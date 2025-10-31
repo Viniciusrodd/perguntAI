@@ -2,7 +2,7 @@
 // import css
 
 // components
-import TextBase from "../components/home/TextBase";
+import BaseText from "../components/home/BaseText";
 import QuestionsNumber from "../components/home/QuestionsNumber";
 import Difficulty from "../components/home/Difficulty";
 import QuestionsType from "../components/home/QuestionsType";
@@ -23,7 +23,7 @@ const Homepage = () => {
 
    return (
       <div>
-         { destiny === 'textBase' && <TextBase /> }
+         { destiny === 'BaseText' && <BaseText /> }
          { destiny === 'questionsNumber' && <QuestionsNumber /> }
          { destiny === 'difficulty' && <Difficulty /> }
          { destiny === 'questionsType' && <QuestionsType /> }

@@ -1,13 +1,32 @@
 
 // import css
-import styles from '../../styles/home/TextBase.module.css';
+import styles from '../../styles/home/BaseText.module.css';
 
 // import components
 import NextPageBtt from '../NextPageBtt';
 import ExitBtt from '../ExitBtt';
 
-// text base
-const TextBase = () => {
+// import hooks
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// import context
+import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+
+
+// base text
+const BaseText = () => {
+   // variables
+   const { text, setText } = useContext(OptionsContext); 
+   const navigate = useNavigate();
+
+   // functions
+   const nextBtt = () =>{
+      navigate('/home/questionsNumber');
+   };
+
+   // jsx
+
    return (
       <div className='home_default_container'>
          <h1 className='title_default'>
@@ -21,12 +40,14 @@ const TextBase = () => {
                title="base_text" 
                placeholder="Insira-o aqui..."
                className={ styles.textarea }
+               value={ text }
+               onChange={ (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value) }
             ></textarea>
             <p>*esse texto servirá de base para as questões</p>
          </div>
 
          { /* next page button */ }
-         <NextPageBtt destiny='questionsNumber' />
+         <NextPageBtt destiny={ nextBtt } />
 
          { /* exit button */ }
          <ExitBtt destiny='welcome' />
@@ -34,4 +55,4 @@ const TextBase = () => {
    );
 };
 
-export default TextBase;
+export default BaseText;
