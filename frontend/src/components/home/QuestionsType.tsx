@@ -7,9 +7,27 @@ import NextPageBtt from '../NextPageBtt';
 import ExitBtt from '../ExitBtt';
 import ProgressBar from '../ProgressBar';
 
+// import hooks
+import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+
+// import context
+import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+
 
 // questions type
 const QuestionsType = () => {
+   // variables
+   const navigate = useNavigate();
+   const { questionType, setQuestionType } = useContext(OptionsContext);
+
+   // functions
+   const nextBtt = () =>{
+      navigate('/home/language');
+   };
+
+   // jsx
+
    return (
       <div className='questions_default_container'>
          { /* progress bar 75% */ }
@@ -20,8 +38,14 @@ const QuestionsType = () => {
          </h1>
 
          <div className={ styles.questions_container }>
-            <select title='questions' name="questions" className={ styles.questions_select }>
-               <option value="" selected>Selecione uma opção</option>
+            <select 
+               title='questions' 
+               name="questions" 
+               className={ styles.questions_select }
+               value={ questionType }
+               onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => setQuestionType(e.target.value) }
+            >
+               <option value="">Selecione uma opção</option>
                <option value="open">Aberta</option>
                <option value="multipleChoice">Múltipla escolha</option>
                <option value="mix">Misturado</option>
@@ -29,7 +53,7 @@ const QuestionsType = () => {
          </div>
 
          { /* next page button */ }
-         <NextPageBtt destiny='language' />
+         <NextPageBtt destiny={ nextBtt } />
 
          { /* exit button */ }
          <ExitBtt destiny='difficulty' />
