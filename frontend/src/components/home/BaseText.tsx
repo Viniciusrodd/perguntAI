@@ -17,8 +17,8 @@ import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
 // base text
 const BaseText = () => {
    // variables
-   const { text, setText } = useContext(OptionsContext); 
    const navigate = useNavigate();
+   const { text, setText } = useContext(OptionsContext); // context 
 
    // functions
    const nextBtt = () =>{
