@@ -2,14 +2,19 @@
 import { createContext } from "react";
 
 
+// types
+export type DifficultyType = 'basic' | 'intermediate' | 'advanced';
+export type QuestionType = 'open' | 'multipleChoice' | 'mix';
+
+
 // questions context type
 export type OptionsContextType = {
    numQuestions: number;
    setNumQuestions: (num: number) => void;
-   difficulty: string;
-   setDifficulty: (difficult: string) => void;
-   questionType: string;
-   setQuestionType: (type: string) => void;
+   difficulty: DifficultyType;
+   setDifficulty: (difficult: DifficultyType) => void;
+   questionType: QuestionType;
+   setQuestionType: (type: QuestionType) => void;
    language: string;
    setLanguage: (lang: string) => void;
    text: string;
@@ -20,9 +25,9 @@ export type OptionsContextType = {
 export const OptionsContext = createContext<OptionsContextType>({
    numQuestions: 0,
    setNumQuestions: () => {},
-   difficulty: '',
+   difficulty: 'basic',
    setDifficulty: () => {},
-   questionType: '',
+   questionType: 'open',
    setQuestionType: () => {},
    language: '',
    setLanguage: () => {},

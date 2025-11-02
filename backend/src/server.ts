@@ -43,7 +43,7 @@ export class Server {
       app.use(hpp());
       app.use(helmet());
       app.use(cors({
-         origin: 'any', // any origin - for development
+         origin: process.env.CLIENT_URL, // any origin - for development
          credentials: true,
          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       }));

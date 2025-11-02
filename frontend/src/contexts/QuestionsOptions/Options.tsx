@@ -11,13 +11,16 @@ type OptionsPropsProvider = {
    children: ReactNode
 };
 
+export type DifficultyType = 'basic' | 'intermediate' | 'advanced';
+export type QuestionType = 'open' | 'multipleChoice' | 'mix';
+
 
 // provider
 export const OptionsProvider = ({ children }: OptionsPropsProvider) =>{
    // states
    const [ numQuestions, setNumQuestions ] = useState<number>(0);
-   const [ difficulty, setDifficulty ] = useState<string>('');
-   const [ questionType, setQuestionType ] = useState<string>('');
+   const [ difficulty, setDifficulty ] = useState<DifficultyType>('basic');
+   const [ questionType, setQuestionType ] = useState<QuestionType>('open');
    const [ language, setLanguage ] = useState<string>('');
    const [ text, setText ] = useState<string>('');
 

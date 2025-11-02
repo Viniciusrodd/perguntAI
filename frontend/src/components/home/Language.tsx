@@ -14,21 +14,37 @@ import React, { useContext } from 'react';
 // import context
 import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
 
+// import service
+import { questionService } from '../../services/question.service';
+
+// import interfaces
+import type { 
+   iGenerationOptions, iStudyMaterial 
+} from '../../../../shared/interfaces/user.interfaces';
+
 
 // language
 const Language = () => {
    // variables
    const navigate = useNavigate();
    const { numQuestions, difficulty, questionType, text, language, setLanguage } = useContext(OptionsContext);
+   const options: iGenerationOptions = {
+      numQuestions, difficulty, questionType, language
+   };
+   const material: iStudyMaterial = { text };
 
    // functions
-   const nextBtt = () =>{
-      console.log(text)
-      console.log(numQuestions)
-      console.log(difficulty)
-      console.log(questionType)
-      console.log(language);
-      navigate('/home/questions');
+   const nextBtt = async () =>{
+      try{
+         // send question options
+         const questions = await questionService.questionGeneration(options, material);
+         console.log(questions);
+
+         navigate('/home/questions');
+      }
+      catch(error){
+         console.error('Error at generate questions at language component', error);
+      }
    };
 
    // jsx
