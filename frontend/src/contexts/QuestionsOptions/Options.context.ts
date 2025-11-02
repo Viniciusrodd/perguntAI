@@ -9,28 +9,35 @@ export type QuestionType = 'open' | 'multipleChoice' | 'mix';
 
 // questions context type
 export type OptionsContextType = {
+   // states
    numQuestions: number;
-   setNumQuestions: (num: number) => void;
    difficulty: DifficultyType;
-   setDifficulty: (difficult: DifficultyType) => void;
    questionType: QuestionType;
-   setQuestionType: (type: QuestionType) => void;
    language: string;
-   setLanguage: (lang: string) => void;
    text: string;
+   
+   // setters
+   setNumQuestions: (num: number) => void;
+   setDifficulty: (difficult: DifficultyType) => void;
+   setQuestionType: (type: QuestionType) => void;
+   setLanguage: (lang: string) => void;
    setText: (text: string) => void;
 };
 
+
 // options context
 export const OptionsContext = createContext<OptionsContextType>({
+   // states
    numQuestions: 0,
-   setNumQuestions: () => {},
    difficulty: 'basic',
-   setDifficulty: () => {},
    questionType: 'open',
-   setQuestionType: () => {},
    language: '',
-   setLanguage: () => {},
    text: '',
+
+   // setters
+   setNumQuestions: () => {},
+   setDifficulty: () => {},
+   setQuestionType: () => {},
+   setLanguage: () => {},
    setText: () => {}
 });
