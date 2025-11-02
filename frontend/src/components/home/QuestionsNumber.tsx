@@ -65,7 +65,7 @@ const QuestionsNumber = () => {
          <NextPageBtt destiny={ nextBtt } />
 
          { /* exit button */ }
-         <ExitBtt destiny='BaseText' />
+         <ExitBtt destiny='baseText' />
       </div>
    );
 };

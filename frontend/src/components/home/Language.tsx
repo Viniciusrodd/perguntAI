@@ -28,14 +28,20 @@ import type {
 const Language = () => {
    // variables
    const navigate = useNavigate();
-   
+
    // contexts
    const { 
       numQuestions, difficulty, questionType, 
       text, language, setLanguage 
    } = useContext(OptionsContext);
 
-   const { questionSessionData } = useContext(QuestionSessionContext);
+   const { 
+      setSessionId,
+      setQuestionSet,
+      setAnswers,
+      setCurrentIndex,
+      setFinished
+   } = useContext(QuestionSessionContext);
 
    const options: iGenerationOptions = {
       numQuestions, difficulty, questionType, language
@@ -60,12 +66,18 @@ const Language = () => {
          }
 
          // fields set
-         questionSessionData.
+         setSessionId(response.sessionId);
+         setQuestionSet(response.questionSet);
+         setAnswers(response.answers || []);
+         setCurrentIndex(response.currentIndex ?? 0);
+         setFinished(response.finished ?? false);
+
+         console.log('✅ question session updated (from response):', response);
       }  
       catch(error){
          console.error('❌ Error at generate questions at language component', error);
       }    
-   }
+   };
 
    // jsx
 

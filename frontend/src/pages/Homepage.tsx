@@ -23,7 +23,7 @@ const Homepage = () => {
 
    return (
       <div>
-         { destiny === 'BaseText' && <BaseText /> }
+         { destiny === 'baseText' && <BaseText /> }
          { destiny === 'questionsNumber' && <QuestionsNumber /> }
          { destiny === 'difficulty' && <Difficulty /> }
          { destiny === 'questionsType' && <QuestionsType /> }

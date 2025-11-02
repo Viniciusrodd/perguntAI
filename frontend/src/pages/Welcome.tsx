@@ -17,7 +17,7 @@ const Welcome = () => {
 
    // functions
    const beginning_btt = () =>{
-      navigate('/home/BaseText');
+      navigate('/home/baseText');
    };
    
 
