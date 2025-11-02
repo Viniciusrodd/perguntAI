@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
 // import context
-import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
 
 
 // questions number

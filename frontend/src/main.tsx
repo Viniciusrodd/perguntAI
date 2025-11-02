@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 
 // providers
-import { OptionsProvider } from './contexts/QuestionsOptions/Options.tsx'
+import { OptionsProvider } from './contexts/QuestionsOptions/Options.provider.tsx'
 
 
 createRoot(document.getElementById('root')!).render(

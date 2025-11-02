@@ -12,7 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
 // import context
-import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
+
+// types
+export type DifficultyType = 'basic' | 'intermediate' | 'advanced';
 
 
 // difficulty
@@ -43,7 +46,10 @@ const Difficulty = () => {
                name="questions" 
                className={ styles.questions_select }
                value={ difficulty }
-               onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => setDifficulty(e.target.value) }
+               onChange={ 
+                  (e: React.ChangeEvent<HTMLSelectElement>) => 
+                     setDifficulty(e.target.value as DifficultyType) 
+               }
             >
                <option value="">Selecione uma opção</option>
                <option value="basic">Básica</option>

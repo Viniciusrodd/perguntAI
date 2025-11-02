@@ -11,7 +11,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import context
-import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
 
 
 // base text

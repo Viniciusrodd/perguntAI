@@ -1,6 +1,6 @@
 
+// imports
 import { createContext } from "react";
-
 
 // types
 export type DifficultyType = 'basic' | 'intermediate' | 'advanced';

@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 
 // import options context
-import { OptionsContext } from "./OptionsContext";
+import { OptionsContext } from "./Options.context";
 
 
 // props provider

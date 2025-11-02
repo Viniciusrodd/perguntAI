@@ -12,7 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
 
 // import context
-import { OptionsContext } from '../../contexts/QuestionsOptions/OptionsContext';
+import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
+
+// types
+type QuestionType = 'open' | 'multipleChoice' | 'mix';
 
 
 // questions type
@@ -43,7 +46,10 @@ const QuestionsType = () => {
                name="questions" 
                className={ styles.questions_select }
                value={ questionType }
-               onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => setQuestionType(e.target.value) }
+               onChange={ 
+                  (e: React.ChangeEvent<HTMLSelectElement>) => 
+                     setQuestionType(e.target.value as QuestionType) 
+               }
             >
                <option value="">Selecione uma opção</option>
                <option value="open">Aberta</option>
