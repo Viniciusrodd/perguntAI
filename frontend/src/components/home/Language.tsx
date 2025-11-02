@@ -13,6 +13,7 @@ import React, { useContext } from 'react';
 
 // import context
 import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
+import { QuestionSessionContext } from '../../contexts/QuestionSession/QuestionSession.context';
 
 // import service
 import { questionService } from '../../services/question.service';
@@ -27,25 +28,44 @@ import type {
 const Language = () => {
    // variables
    const navigate = useNavigate();
-   const { numQuestions, difficulty, questionType, text, language, setLanguage } = useContext(OptionsContext);
+   
+   // contexts
+   const { 
+      numQuestions, difficulty, questionType, 
+      text, language, setLanguage 
+   } = useContext(OptionsContext);
+
+   const { questionSessionData } = useContext(QuestionSessionContext);
+
    const options: iGenerationOptions = {
       numQuestions, difficulty, questionType, language
    };
    const material: iStudyMaterial = { text };
 
    // functions
+
+   // button handler
    const nextBtt = async () =>{
+      await questionGenerationRequest();
+      navigate('/home/questions');
+   };
+
+   // question generation request
+   const questionGenerationRequest = async () =>{
       try{
          // send question options
-         const questions = await questionService.questionGeneration(options, material);
-         console.log(questions);
+         const response = await questionService.questionGeneration(options, material);
+         if(!response){
+            console.error('⚠️ Retorno inesperado da API:', response);
+         }
 
-         navigate('/home/questions');
-      }
+         // fields set
+         questionSessionData.
+      }  
       catch(error){
-         console.error('Error at generate questions at language component', error);
-      }
-   };
+         console.error('❌ Error at generate questions at language component', error);
+      }    
+   }
 
    // jsx
 

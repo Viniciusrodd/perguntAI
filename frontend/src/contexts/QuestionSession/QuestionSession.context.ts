@@ -9,19 +9,18 @@ import type { iUserAnswer } from "../../../../shared/interfaces/user.interfaces"
 
 // question session type
 export type QuestionSessionContextType = {
-   // states
-   sessionId: string;
-   questionSet: iQuestionsSet;
-   answers: iUserAnswer[];
-   currentIndex: number;
-   finished: boolean;
-
-   // setters
-   setSessionId: (id: string) => void;
-   setQuestionSet: (questionSet: iQuestionsSet) => void;
-   setAnswers: (answers: iUserAnswer[]) => void;
-   setCurrentIndex: (index: number) => void;
-   setFinished: (finished: boolean) => void;
+   questionSessionData: {
+      sessionId: string;
+      questionSet: iQuestionsSet;
+      answers: iUserAnswer[];
+      currentIndex: number;
+      finished: boolean;
+      setSessionId: (id: string) => void;
+      setQuestionSet: (questionSet: iQuestionsSet) => void;
+      setAnswers: (answers: iUserAnswer[]) => void;
+      setCurrentIndex: (index: number) => void;
+      setFinished: (finished: boolean) => void;
+   };
 };
 
 
@@ -50,17 +49,16 @@ const initialAnswers: iUserAnswer[] = [];
 
 // questions session context
 export const QuestionSessionContext = createContext<QuestionSessionContextType>({
-   // states
-   sessionId: '',
-   questionSet: questionSetInitValues,
-   answers: initialAnswers,
-   currentIndex: 0,
-   finished: false,
-   
-   // setters
-   setSessionId: () => {},
-   setQuestionSet: () => {},
-   setAnswers: () => {},
-   setCurrentIndex: () => {},
-   setFinished: () => {},
+   questionSessionData: {
+      sessionId: '',
+      questionSet: questionSetInitValues,
+      answers: initialAnswers,
+      currentIndex: 0,
+      finished: false,
+      setSessionId: () => {},
+      setQuestionSet: () => {},
+      setAnswers: () => {},
+      setCurrentIndex: () => {},
+      setFinished: () => {},      
+   }
 });

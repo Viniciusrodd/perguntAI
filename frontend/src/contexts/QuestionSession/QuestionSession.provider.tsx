@@ -24,14 +24,17 @@ export const QuestionSessionProvider = ({ children }: QuestionSessionPropsProvid
    const [ currentIndex, setCurrentIndex ] = useState<number>(0);
    const [ finished, setFinished ] = useState<boolean>(false);
 
+   // unique object
+   const questionSessionData = {
+      sessionId, setSessionId,
+      questionSet, setQuestionSet,
+      answers, setAnswers,
+      currentIndex, setCurrentIndex,
+      finished, setFinished,
+   };
+
    return (
-      <QuestionSessionContext.Provider value={{
-         sessionId, setSessionId,
-         questionSet, setQuestionSet,
-         answers, setAnswers,
-         currentIndex, setCurrentIndex,
-         finished, setFinished
-      }}>
+      <QuestionSessionContext.Provider value={{ questionSessionData }}>
          { children }
       </QuestionSessionContext.Provider>
    );
