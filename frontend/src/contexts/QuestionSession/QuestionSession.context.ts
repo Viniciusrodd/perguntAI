@@ -44,12 +44,16 @@ const questionSetInitValues: iQuestionsSet = {
 };
 
 
+// answers set values - for questions session context
+const initialAnswers: iUserAnswer[] = [];
+
+
 // questions session context
 export const QuestionSessionContext = createContext<QuestionSessionContextType>({
    // states
    sessionId: '',
    questionSet: questionSetInitValues,
-   answers: [],
+   answers: initialAnswers,
    currentIndex: 0,
    finished: false,
    

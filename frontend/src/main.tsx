@@ -5,12 +5,15 @@ import App from './App.tsx'
 
 // providers
 import { OptionsProvider } from './contexts/QuestionsOptions/Options.provider.tsx'
+import { QuestionSessionProvider } from './contexts/QuestionSession/QuestionSession.provider.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
    <StrictMode>
       <OptionsProvider>
-         <App />
+         <QuestionSessionProvider>
+            <App />
+         </QuestionSessionProvider>
       </OptionsProvider>
    </StrictMode>,
 )

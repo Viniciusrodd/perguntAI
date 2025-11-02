@@ -5,12 +5,10 @@ import { useState, type ReactNode } from "react";
 // import options context
 import { OptionsContext } from "./Options.context";
 
-
-// props provider
+// types
 type OptionsPropsProvider = {
    children: ReactNode
 };
-
 export type DifficultyType = 'basic' | 'intermediate' | 'advanced';
 export type QuestionType = 'open' | 'multipleChoice' | 'mix';
 
