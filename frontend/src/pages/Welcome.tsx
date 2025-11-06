@@ -52,7 +52,7 @@ const Welcome = () => {
    // modal event handler
    const modal_event_handler = () =>{
       if(modal_event === 'base_text'){
-         base_text();
+         nextBtt();
       }
    };
 
@@ -70,7 +70,7 @@ const Welcome = () => {
    }
 
    // base text - navigate
-   const base_text = () =>{
+   const nextBtt = () =>{
       navigate('/home/baseText');
    };
    
