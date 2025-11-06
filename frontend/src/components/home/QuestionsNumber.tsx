@@ -6,30 +6,86 @@ import styles from '../../styles/home/Questions.module.css';
 import NextPageBtt from '../NextPageBtt';
 import ExitBtt from '../ExitBtt';
 import ProgressBar from '../ProgressBar';
+import Modal from '../Modal';
 
 // import hooks
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 // import context
 import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
 
+// import interfaces
+import type { iModalConfig } from '../../../../shared/interfaces/modal.interface';
+
 
 // questions number
 const QuestionsNumber = () => {
-   // variables
+   
+   //// variables
    const navigate = useNavigate();
    const { numQuestions, setNumQuestions } = useContext(OptionsContext);
+   const [ modal_display, setModal_display ] = useState<boolean>(false);
+   const [ modal_title, setModal_title ] = useState<string>('');
+   const [ modal_msg, setModal_msg ] = useState<string>('');
+   const [ modal_btt, setmodal_btt ] = useState<boolean | string>(false);
+   const [ modal_btt_2, setModal_btt_2 ] = useState<boolean | string>(false);
 
-   // functions
+
+   //// functions
+   
+   
+   // modal config
+   const modal_config = ({ title, msg, btt1, btt2, display }: iModalConfig) => {
+      setModal_title(title ?? '');
+      setModal_msg(msg ?? '');
+      setmodal_btt(btt1 ?? false);
+      setModal_btt_2(btt2 ?? false);
+      setModal_display(display ?? false);
+   };   
+
+   // close modal
+   const closeModal = () =>{
+      modal_config({
+         title: '', msg: '', btt1: false, 
+         btt2: false, display: false
+      });
+   };
+
+   // questions check
+   const questions_check = () =>{
+      if(numQuestions === 0){
+         modal_config({
+            title: 'Só um segundo ❗️', 
+            msg: `Insira quantas questões deseja para prosseguir 🔍`, 
+            btt1: false, btt2: 'Voltar', display: true
+         });
+      }else{
+         nextBtt();
+      }
+   }
+ 
+   // home - navigate
    const nextBtt = () =>{
       navigate('/home/difficulty');
    };
 
-   // jsx
+   
+   //// jsx
+
 
    return (
       <div className='questions_default_container'>
+         { /* modal */ }
+         <Modal 
+            title={ modal_title }
+            msg={ modal_msg }
+            btt1={ modal_btt }
+            btt2={ modal_btt_2 }
+            display={ modal_display }
+            onClose={ closeModal }
+         />         
+         
          { /* progress bar 25% */ }
          <ProgressBar />
 
@@ -62,7 +118,7 @@ const QuestionsNumber = () => {
          </div>
 
          { /* next page button */ }
-         <NextPageBtt destiny={ nextBtt } />
+         <NextPageBtt destiny={ questions_check } />
 
          { /* exit button */ }
          <ExitBtt destiny='baseText' />
