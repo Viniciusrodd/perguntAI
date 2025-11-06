@@ -10,7 +10,7 @@ import Modal from '../Modal';
 
 // import hooks
 import { useNavigate } from 'react-router-dom';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 // import context
 import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
@@ -42,6 +42,7 @@ const Language = () => {
    const [ modal_btt_2, setModal_btt_2 ] = useState<boolean | string>(false);
    const [ modal_event, setModal_event ] = useState<string>('');
    const [ destiny_redirect, setDestiny_redirect ] = useState<string>('');
+   const [ redirect, setRedirect ] = useState<boolean>(false);
 
 
    //// contexts
@@ -65,6 +66,25 @@ const Language = () => {
 
 
    //// functions
+
+
+   // redirect
+   useEffect(() =>{
+      if(redirect){
+         const clearMessage = setTimeout(() =>{
+            modal_config({
+               title: '', msg: '', btt1: false, 
+               btt2: false, display: false
+            });
+
+            navigate('/home/questions');            
+         }, 6000);
+
+         return () =>{
+            clearTimeout(clearMessage);
+         };
+      }
+   }, [redirect, navigate]);
 
 
    // modal config
@@ -132,7 +152,6 @@ const Language = () => {
    // questions - navigate
    const nextBtt = async () =>{
       await questionGenerationRequest();
-      navigate('/home/questions');
    };
 
    // question generation request
@@ -151,10 +170,22 @@ const Language = () => {
          setCurrentIndex(response.currentIndex ?? 0);
          setFinished(response.finished ?? false);
 
-         console.log('✅ question session updated (from response):', response);
+         console.log('✅ question generation success:', response);
+         modal_config({
+            title: 'Sucesso ✔️', 
+            msg: `🤖 Suas questões foram geradas 🤖 \n você será redirecionado para elas...`, 
+            btt1: false, btt2: false, display: true
+         });
+
+         setRedirect(true);
       }  
       catch(error){
          console.error('❌ Error at generate questions at language component', error);
+         modal_config({
+            title: 'Só um segundo ❗️', 
+            msg: `Erro interno ao gerar as questões ❌`, 
+            btt1: false, btt2: 'Voltar', display: true
+         });
       }    
    };
 
