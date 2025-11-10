@@ -2,7 +2,7 @@
 
 :root{
    --color1: #0e1116;
-   --color1b: #161a23;
+   --color1b: #1a1e29;
    --color2: #b8e3e9;
    --color2b: #a0d1d8;
    --color3: #407899;
@@ -80,11 +80,13 @@
       transition: ease-in-out all 0.5s;
 
       & .input_response{
-         height: 35px;
+         height: 40px;
          width: 80%;
          border: none;
          border-radius: 10px;
-         color: black;
+         background-color: transparent;
+         border: 1px solid white;
+         color: white;
          font-size: 14px;
          text-align: left;
          padding: 0px 20px;
@@ -92,7 +94,7 @@
    }
 
    & .question_button{
-      height: 37px;
+      height: 43px;
       width: 7.5%;
       background-color: var(--color3);
       font-size: 14px;
@@ -110,22 +112,49 @@
    & .question_button_cancel{
       background-color: var(--color5);
    }
+
+   & .radio {
+      /* Reset básico */
+      -webkit-appearance: none;
+      appearance: none;
+      
+      height: 15px;
+      width: 15px;
+      border: none;
+      border-radius: 50%;
+      background-color: white;
+      margin-right: 20px;
+      cursor: pointer;
+   }
+   & .radio:checked {
+      background-color: var(--color3);
+      border: 3px solid white;
+   }
 }
 
 .question_p_container{
    display: flex;
    flex-direction: row;
-
+   
    & p{
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
    }
-
+   
    & .question_p_id{
       margin-right: 10px;
    }
-
+   
    & .question_p{
       font-style: italic;
+   }
+}
+
+.question_p_container_2{
+   margin-left: 30px;
+   width: 90%;
+
+   & p{
+      font-size: 18px;
    }
 }

@@ -74,46 +74,76 @@ const QuestionsGenerated = () => {
          </h1>
 
          <div className={ styles.questions }>
-            { questionSet.questions && questionSet.questions.map((data, index) =>(
+            { questionSet.questions && questionSet.questions.map((question, index) =>(
                <div className={ styles.question_container } key={ index }>
-                  <div className={ styles.question } key={ data.id }>
-                     <div className={ styles.question_p_container }>
-                        <p className={ styles.question_p_id }>
-                           { data.id.split('q')[1] }.
-                        </p>
-                        <p className={ styles.question_p }>
-                           { data.prompt }
-                        </p>
+                  { question.acceptableAnswers.length > 1 ? (
+                     <>
+                     <div className={ styles.question } key={ question.id }>
+                        <div className={ styles.question_p_container }>
+                           <p className={ styles.question_p_id }>
+                              { question.id.split('q')[1] }.
+                           </p>
+                           <p className={ styles.question_p }>
+                              <ins>{ question.prompt }</ins>
+                           </p>
+                        </div>
                      </div>
-                     { !respondingQuestionsBtt[data.id] ? (
-                        <button 
-                           type='button' 
-                           className={ styles.question_button } 
-                           onClick={ () => handleResponseClick(data.id) }
-                        >
-                           Responder
-                        </button>
-                     ) : (
-                        <div className={ styles.question_answer_container }>
-                           <input 
-                              type="text" 
-                              name="userResponse" 
-                              placeholder='Insira sua resposta' 
-                              className={ styles.input_response }
-                           />
-                           <button type='button' className={ styles.question_button }>
-                              Enviar
-                           </button>
+
+                     { question.acceptableAnswers.map((acceptableAnswer, index) =>(
+                        <div className={ styles.question } key={ index }>
+                           <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
+                              <p className={ styles.question_p_id }>
+                                 -
+                              </p>
+                              <p className={ styles.question_p }>
+                                 { acceptableAnswer }
+                              </p>
+                           </div>
+                           <input type="radio" name="answer" title='answer' className={styles.radio} />
+                        </div>
+                     )) }
+                     </>
+                  ) : (
+                     <div className={ styles.question } key={ question.id }>
+                        <div className={ styles.question_p_container }>
+                           <p className={ styles.question_p_id }>
+                              { question.id.split('q')[1] }.
+                           </p>
+                           <p className={ styles.question_p }>
+                              <ins>{ question.prompt }</ins>
+                           </p>
+                        </div>
+
+                        { !respondingQuestionsBtt[question.id] ? (
                            <button 
                               type='button' 
-                              className={ `${styles.question_button} ${styles.question_button_cancel}` } 
-                              onClick={ () => handleCancelResponse(data.id) }
+                              className={ styles.question_button } 
+                              onClick={ () => handleResponseClick(question.id) }
                            >
-                              Cancelar
+                              Responder
                            </button>
-                        </div>
-                     ) }
-                  </div>
+                        ) : (
+                           <div className={ styles.question_answer_container }>
+                              <input 
+                                 type="text" 
+                                 name="userResponse" 
+                                 placeholder='Insira sua resposta' 
+                                 className={ styles.input_response }
+                              />
+                              <button type='button' className={ styles.question_button }>
+                                 Enviar
+                              </button>
+                              <button 
+                                 type='button' 
+                                 className={ `${styles.question_button} ${styles.question_button_cancel}` } 
+                                 onClick={ () => handleCancelResponse(question.id) }
+                              >
+                                 Cancelar
+                              </button>
+                           </div>
+                        ) }
+                     </div>
+                  ) }
                </div>
             )) }
          </div>
