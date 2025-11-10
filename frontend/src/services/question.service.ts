@@ -27,7 +27,7 @@ class QuestionService {
       };
 
       const res = await axios.post('http://localhost:5111/questions', payload);
-      return res.data;      
+      return res.data.data;      
    };
 
 };

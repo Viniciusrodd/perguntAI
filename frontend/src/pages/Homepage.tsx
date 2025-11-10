@@ -7,7 +7,6 @@ import QuestionsNumber from "../components/home/QuestionsNumber";
 import Difficulty from "../components/home/Difficulty";
 import QuestionsType from "../components/home/QuestionsType";
 import Language from "../components/home/Language";
-import QuestionsGenerated from "./QuestionsGenerated";
 
 // hooks
 import { useParams } from "react-router-dom";
@@ -29,7 +28,6 @@ const Homepage = () => {
          { destiny === 'difficulty' && <Difficulty /> }
          { destiny === 'questionsType' && <QuestionsType /> }
          { destiny === 'language' && <Language /> }
-         { destiny === 'questions' && <QuestionsGenerated /> }
       </div>
    );
 };

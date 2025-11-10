@@ -21,6 +21,9 @@ function App() {
                {/* homepage */}
                <Route path='/home/:destiny' element={ <Homepage /> } />               
                <Route path='/questions/:sessionID' element={ <QuestionsGenerated /> } />
+
+               { /* not found route */ }
+               <Route path='*' element={ <Welcome /> } />
             </Routes>
          </BrowserRouter>
       </div>
