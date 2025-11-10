@@ -3,7 +3,7 @@
 import styles from '../styles/QuestionsGenerated.module.css';
 
 // import hooks
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSess
 const QuestionsGenerated = () => {
 
    //// variables
+   const [respondingQuestionsBtt, setRespondingQuestionsBtt] = useState<{[key: string]: boolean}>({});   
    const { sessionID } = useParams<{ sessionID: string }>();
    const navigate = useNavigate();
    const { 
@@ -30,14 +31,12 @@ const QuestionsGenerated = () => {
 
 
    useEffect(() =>{
-      if(!sessionID || sessionID !== sessionId) navigate('/');
-      console.log(      
-         sessionId,
-         questionSet,
-         answers,
-         currentIndex,
-         finished 
-      );
+      //if(!sessionID || sessionID !== sessionId) navigate('/');
+      console.log(sessionId);
+      console.log(questionSet);
+      console.log(answers);
+      console.log(currentIndex);
+      console.log(finished);
    }, [
          sessionID,
          sessionId,
@@ -48,6 +47,22 @@ const QuestionsGenerated = () => {
          navigate
       ]);
 
+   // handle response btt click
+   const handleResponseClick = (questionId: string) => {
+      setRespondingQuestionsBtt(prev => ({
+         ...prev,
+         [questionId]: true
+      }));
+   };
+
+   // handle response cancel btt click
+   const handleCancelResponse = (questionId: string) => {
+      setRespondingQuestionsBtt(prev => ({
+         ...prev,
+         [questionId]: false
+      }));
+   };      
+
 
    //// jsx
 
@@ -57,6 +72,55 @@ const QuestionsGenerated = () => {
          <h1 className={ styles.title }>
             Questões geradas
          </h1>
+
+         <div className={ styles.questions }>
+            { questionSet.questions && questionSet.questions.map((data, index) =>(
+               <div className={ styles.question_container } key={ index }>
+                  <div className={ styles.question } key={ data.id }>
+                     <div className={ styles.question_p_container }>
+                        <p className={ styles.question_p_id }>
+                           { data.id.split('q')[1] }.
+                        </p>
+                        <p className={ styles.question_p }>
+                           { data.prompt }
+                        </p>
+                     </div>
+                     { !respondingQuestionsBtt[data.id] ? (
+                        <button 
+                           type='button' 
+                           className={ styles.question_button } 
+                           onClick={ () => handleResponseClick(data.id) }
+                        >
+                           Responder
+                        </button>
+                     ) : (
+                        <div className={ styles.question_answer_container }>
+                           <input 
+                              type="text" 
+                              name="userResponse" 
+                              placeholder='Insira sua resposta' 
+                              className={ styles.input_response }
+                           />
+                           <button type='button' className={ styles.question_button }>
+                              Enviar
+                           </button>
+                           <button 
+                              type='button' 
+                              className={ `${styles.question_button} ${styles.question_button_cancel}` } 
+                              onClick={ () => handleCancelResponse(data.id) }
+                           >
+                              Cancelar
+                           </button>
+                        </div>
+                     ) }
+                  </div>
+               </div>
+            )) }
+         </div>
+
+         <h2 className={ styles.subtitle }>
+            questões geradas pela ollama - mistral IA
+         </h2>
       </div>
    );
 };
