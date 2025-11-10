@@ -51,7 +51,8 @@ const Language = () => {
       text, language, setLanguage 
    } = useContext(OptionsContext);
 
-   const { 
+   const {
+      sessionId, 
       setSessionId,
       setQuestionSet,
       setAnswers,
@@ -77,14 +78,14 @@ const Language = () => {
                btt2: false, display: false
             });
 
-            navigate('/home/questions');            
+            navigate(`/questions/${sessionId}`);            
          }, 6000);
 
          return () =>{
             clearTimeout(clearMessage);
          };
       }
-   }, [redirect, navigate]);
+   }, [redirect, navigate, sessionId]);
 
 
    // modal config

@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+:root{
+   --color1: #0e1116;
+   --color2: #b8e3e9;
+   --color2b: #a0d1d8;
+   --color3: #407899;
+   --color4: #95c623;
+   --color5: #ba2d0b;
+}
+
+
+.questions_container{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   flex-direction: column;
+   padding: 10px 0px;
+   width: 70vw;
+   border: 1px solid red;
+}
+
+.title{
+   font-size: 35px;
+   text-align: center;
+   font-style: italic;
+   letter-spacing: 1px;
+   margin: 0px 0px 50px 0px;
+}
