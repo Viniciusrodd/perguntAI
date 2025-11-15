@@ -13,6 +13,9 @@ import { useNavigate } from 'react-router-dom';
 // import context
 import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSession.context';
 
+// import conmponents
+import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
+
 // types
 type QuestionState = {
    responding: boolean;
@@ -106,42 +109,16 @@ const QuestionsGenerated = () => {
          <div className={ styles.questions }>
             { questionSet.questions && questionSet.questions.map((question) =>(
                <div className={ styles.question_container } key={ question.id }>
-{/* MULTIPLE CHOICE QUESTIONS */}
+                  {/* MULTIPLE CHOICE QUESTIONS */}
                   { question.acceptableAnswers.length > 1 ? (
-                     <>
-                     <div className={ styles.question } key={ question.id }>
-                        <div className={ styles.question_p_container }>
-                           <p className={ styles.question_p_id }>
-                              { question.id.split('q')[1] }.
-                           </p>
-                           <p className={ styles.question_p }>
-                              <ins>{ question.prompt }</ins>
-                           </p>
-                        </div>
-                     </div>
-
-                     { question.acceptableAnswers.map((acceptableAnswer) =>(
-                        <div className={ styles.question } key={ question.id }>
-                           <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
-                              <p className={ styles.question_p_id }>
-                                 -
-                              </p>
-                              <p className={ styles.question_p }>
-                                 { acceptableAnswer }
-                              </p>
-                           </div>
-                           <input 
-                              type="radio" 
-                              name={ `answer-${question.id}` } 
-                              title='answer' 
-                              className={ styles.radio } 
-                           />
-                        </div>
-                     )) }
-                     </>
+                     <MultipleChoiceQuestions 
+                        id={ question.id } 
+                        prompt={ question.prompt }
+                        acceptableAnswers={ question.acceptableAnswers }
+                     />
                   ) : (
                      <div className={ styles.question } key={ question.id }>
-{/* OPEN QUESTIONS */}
+                     {/* OPEN QUESTIONS */}
                         <div className={ styles.question_p_container }>
                            <p className={ styles.question_p_id }>
                               { question.id.split('q')[1] }.
