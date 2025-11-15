@@ -7,7 +7,10 @@ import exit from '../../public/images/home/exit_arrow.png';
 
 // import hooks
 import { useNavigate } from 'react-router-dom';
-import type React from 'react';
+import React, { useContext } from 'react';
+
+// import context
+import { LoadingContext } from '../contexts/Loading/Loading.context';
 
 // interfaces
 interface iExitBtt {
@@ -17,30 +20,42 @@ interface iExitBtt {
 
 // exit btt
 const ExitBtt: React.FC<iExitBtt> = ({ destiny }) => {
-   // variables
+   //// variables
    const navigate = useNavigate();
+   const { loading } = useContext(LoadingContext);
 
-   // functions
+
+   //// functions
+   
+   
    const exit_btt = () =>{
       if(destiny === 'welcome') navigate('/')
       else navigate(`/home/${destiny}`);
    };
 
-   // jsx
+
+   //// jsx
+
 
    return (
       <div className={ styles.exit_container }>
-         <button 
-            type='button' 
-            data-tooltip='Voltar' 
-            className={`tooltip_btt tooltip`}
-            onClick={ exit_btt }>
-            <img 
-               src={ exit } 
-               alt="exit"
-               className={ styles.exit }
-            />
-         </button>
+         { loading ? (
+            <>
+             <p></p>  
+            </>
+         ) : (
+            <button 
+               type='button' 
+               data-tooltip='Voltar' 
+               className={`tooltip_btt tooltip`}
+               onClick={ exit_btt }>
+               <img 
+                  src={ exit } 
+                  alt="exit"
+                  className={ styles.exit }
+               />
+            </button>
+         ) }
       </div>
    );
 };

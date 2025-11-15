@@ -15,6 +15,7 @@ import React, { useContext, useState, useEffect } from 'react';
 // import context
 import { OptionsContext } from '../../contexts/QuestionsOptions/Options.context';
 import { QuestionSessionContext } from '../../contexts/QuestionSession/QuestionSession.context';
+import { LoadingContext } from '../../contexts/Loading/Loading.context';
 
 // import service
 import { questionService } from '../../services/question.service';
@@ -64,6 +65,8 @@ const Language = () => {
       numQuestions, difficulty, questionType, language
    };
    const material: iStudyMaterial = { text };
+
+   const { setLoading } = useContext(LoadingContext);
 
 
    //// functions
@@ -152,6 +155,7 @@ const Language = () => {
 
    // questions - navigate
    const nextBtt = async () =>{
+      setLoading(true);
       await questionGenerationRequest();
    };
 
@@ -178,6 +182,7 @@ const Language = () => {
             btt1: false, btt2: false, display: true
          });
 
+         setLoading(false);
          setRedirect(true);
       }  
       catch(error){

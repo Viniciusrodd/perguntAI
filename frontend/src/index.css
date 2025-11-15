@@ -128,3 +128,28 @@ div::-webkit-scrollbar-thumb:hover {
 div::-webkit-scrollbar-thumb:active {
    background-color: var(--color2);
 }
+
+
+/* loading */
+
+.loading_msg{
+   font-size: 17px;
+   font-style: italic;
+}
+
+.loading_img{
+   height: 40px;
+   width: 40px;
+   animation: spin 1s linear infinite;
+}
+
+/* animations */
+
+@keyframes spin {
+   0% {
+      transform: rotate(0deg);
+   }
+   100% {
+      transform: rotate(360deg);
+   }
+}
