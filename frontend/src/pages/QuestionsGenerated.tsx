@@ -2,6 +2,9 @@
 // import css
 import styles from '../styles/QuestionsGenerated.module.css';
 
+// import images
+import correctImg from '../../public/images/questions/correct.png';
+
 // import hooks
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,12 +13,18 @@ import { useNavigate } from 'react-router-dom';
 // import context
 import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSession.context';
 
+// types
+type QuestionState = {
+   responding: boolean;
+   responded: boolean;
+};
+
 
 // questions generated
 const QuestionsGenerated = () => {
 
    //// variables
-   const [respondingQuestionsBtt, setRespondingQuestionsBtt] = useState<{[key: string]: boolean}>({});   
+   const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
    const { sessionID } = useParams<{ sessionID: string }>();
    const navigate = useNavigate();
    const { 
@@ -49,19 +58,40 @@ const QuestionsGenerated = () => {
 
    // handle response btt click
    const handleResponseClick = (questionId: string) => {
-      setRespondingQuestionsBtt(prev => ({
+      setQuestionState(prev => ({
          ...prev,
-         [questionId]: true
+         [questionId]: {
+            responding: true,
+            responded: false
+         } 
       }));
    };
 
    // handle response cancel btt click
    const handleCancelResponse = (questionId: string) => {
-      setRespondingQuestionsBtt(prev => ({
+      setQuestionState(prev => ({
          ...prev,
-         [questionId]: false
+         [questionId]: {
+            responding: false,
+            responded: false
+         }
       }));
    };      
+
+   // handle response btt
+   const handleResponseSend_btt = (questionId: string) =>{
+      setQuestionState(prev => ({
+         ...prev,
+         [questionId]: {
+            responding: false,
+            responded: true
+         }
+      }));
+   };
+
+   useEffect(() =>{
+      console.log('question state: ', questionState);
+   }, [ questionState, setQuestionState ])
 
 
    //// jsx
@@ -74,8 +104,9 @@ const QuestionsGenerated = () => {
          </h1>
 
          <div className={ styles.questions }>
-            { questionSet.questions && questionSet.questions.map((question, index) =>(
-               <div className={ styles.question_container } key={ index }>
+            { questionSet.questions && questionSet.questions.map((question) =>(
+               <div className={ styles.question_container } key={ question.id }>
+{/* MULTIPLE CHOICE QUESTIONS */}
                   { question.acceptableAnswers.length > 1 ? (
                      <>
                      <div className={ styles.question } key={ question.id }>
@@ -89,8 +120,8 @@ const QuestionsGenerated = () => {
                         </div>
                      </div>
 
-                     { question.acceptableAnswers.map((acceptableAnswer, index) =>(
-                        <div className={ styles.question } key={ index }>
+                     { question.acceptableAnswers.map((acceptableAnswer) =>(
+                        <div className={ styles.question } key={ question.id }>
                            <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
                               <p className={ styles.question_p_id }>
                                  -
@@ -99,12 +130,18 @@ const QuestionsGenerated = () => {
                                  { acceptableAnswer }
                               </p>
                            </div>
-                           <input type="radio" name="answer" title='answer' className={styles.radio} />
+                           <input 
+                              type="radio" 
+                              name={ `answer-${question.id}` } 
+                              title='answer' 
+                              className={ styles.radio } 
+                           />
                         </div>
                      )) }
                      </>
                   ) : (
                      <div className={ styles.question } key={ question.id }>
+{/* OPEN QUESTIONS */}
                         <div className={ styles.question_p_container }>
                            <p className={ styles.question_p_id }>
                               { question.id.split('q')[1] }.
@@ -114,7 +151,7 @@ const QuestionsGenerated = () => {
                            </p>
                         </div>
 
-                        { !respondingQuestionsBtt[question.id] ? (
+                        { !questionState[question.id]?.responding && !questionState[question.id]?.responded ? (
                            <button 
                               type='button' 
                               className={ styles.question_button } 
@@ -122,6 +159,12 @@ const QuestionsGenerated = () => {
                            >
                               Responder
                            </button>
+                        ) : !questionState[question.id]?.responding && questionState[question.id]?.responded ? (
+                           <img 
+                              src={ correctImg } 
+                              alt="correct_img"  
+                              className={ styles.correct_img }
+                           />
                         ) : (
                            <div className={ styles.question_answer_container }>
                               <input 
@@ -130,7 +173,11 @@ const QuestionsGenerated = () => {
                                  placeholder='Insira sua resposta' 
                                  className={ styles.input_response }
                               />
-                              <button type='button' className={ styles.question_button }>
+                              <button 
+                                 type='button' 
+                                 className={ styles.question_button } 
+                                 onClick={ () => handleResponseSend_btt(question.id) }
+                              >
                                  Enviar
                               </button>
                               <button 
