@@ -5,11 +5,13 @@ import styles from '../../styles/QuestionsGenerated.module.css';
 // import hooks
 import React from 'react';
 
+//  custom inteface
 interface iquestion {
    id: string;
    prompt: string;
    acceptableAnswers: string[];
 }
+
 
 // multiple choice questions
 const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, acceptableAnswers}) => {

@@ -2,11 +2,8 @@
 // import css
 import styles from '../styles/QuestionsGenerated.module.css';
 
-// import images
-import correctImg from '../../public/images/questions/correct.png';
-
 // import hooks
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,19 +12,13 @@ import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSess
 
 // import conmponents
 import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
-
-// types
-type QuestionState = {
-   responding: boolean;
-   responded: boolean;
-};
+import OpenQuestions from '../components/questionsGenerated/OpenQuestions';
 
 
 // questions generated
 const QuestionsGenerated = () => {
 
    //// variables
-   const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
    const { sessionID } = useParams<{ sessionID: string }>();
    const navigate = useNavigate();
    const { 
@@ -59,43 +50,6 @@ const QuestionsGenerated = () => {
          navigate
       ]);
 
-   // handle response btt click
-   const handleResponseClick = (questionId: string) => {
-      setQuestionState(prev => ({
-         ...prev,
-         [questionId]: {
-            responding: true,
-            responded: false
-         } 
-      }));
-   };
-
-   // handle response cancel btt click
-   const handleCancelResponse = (questionId: string) => {
-      setQuestionState(prev => ({
-         ...prev,
-         [questionId]: {
-            responding: false,
-            responded: false
-         }
-      }));
-   };      
-
-   // handle response btt
-   const handleResponseSend_btt = (questionId: string) =>{
-      setQuestionState(prev => ({
-         ...prev,
-         [questionId]: {
-            responding: false,
-            responded: true
-         }
-      }));
-   };
-
-   useEffect(() =>{
-      console.log('question state: ', questionState);
-   }, [ questionState, setQuestionState ])
-
 
    //// jsx
 
@@ -109,7 +63,6 @@ const QuestionsGenerated = () => {
          <div className={ styles.questions }>
             { questionSet.questions && questionSet.questions.map((question) =>(
                <div className={ styles.question_container } key={ question.id }>
-                  {/* MULTIPLE CHOICE QUESTIONS */}
                   { question.acceptableAnswers.length > 1 ? (
                      <MultipleChoiceQuestions 
                         id={ question.id } 
@@ -117,56 +70,10 @@ const QuestionsGenerated = () => {
                         acceptableAnswers={ question.acceptableAnswers }
                      />
                   ) : (
-                     <div className={ styles.question } key={ question.id }>
-                     {/* OPEN QUESTIONS */}
-                        <div className={ styles.question_p_container }>
-                           <p className={ styles.question_p_id }>
-                              { question.id.split('q')[1] }.
-                           </p>
-                           <p className={ styles.question_p }>
-                              <ins>{ question.prompt }</ins>
-                           </p>
-                        </div>
-
-                        { !questionState[question.id]?.responding && !questionState[question.id]?.responded ? (
-                           <button 
-                              type='button' 
-                              className={ styles.question_button } 
-                              onClick={ () => handleResponseClick(question.id) }
-                           >
-                              Responder
-                           </button>
-                        ) : !questionState[question.id]?.responding && questionState[question.id]?.responded ? (
-                           <img 
-                              src={ correctImg } 
-                              alt="correct_img"  
-                              className={ styles.correct_img }
-                           />
-                        ) : (
-                           <div className={ styles.question_answer_container }>
-                              <input 
-                                 type="text" 
-                                 name="userResponse" 
-                                 placeholder='Insira sua resposta' 
-                                 className={ styles.input_response }
-                              />
-                              <button 
-                                 type='button' 
-                                 className={ styles.question_button } 
-                                 onClick={ () => handleResponseSend_btt(question.id) }
-                              >
-                                 Enviar
-                              </button>
-                              <button 
-                                 type='button' 
-                                 className={ `${styles.question_button} ${styles.question_button_cancel}` } 
-                                 onClick={ () => handleCancelResponse(question.id) }
-                              >
-                                 Cancelar
-                              </button>
-                           </div>
-                        ) }
-                     </div>
+                     <OpenQuestions
+                        id={ question.id }
+                        prompt={ question.prompt }
+                     />
                   ) }
                </div>
             )) }
