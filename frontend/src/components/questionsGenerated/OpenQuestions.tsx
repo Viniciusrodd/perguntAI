@@ -81,7 +81,7 @@ const OpenQuestions: React.FC<iquestion> = ({
                { id.split('q')[1] }.
             </p>
             <p className={ styles.question_p }>
-               <ins>{ prompt }</ins>
+               { prompt }
             </p>
          </div>
 
@@ -105,6 +105,7 @@ const OpenQuestions: React.FC<iquestion> = ({
                   type="text" 
                   name="userResponse" 
                   placeholder='Insira sua resposta' 
+                  autoComplete='off'
                   className={ styles.input_response }
                />
                <button 
