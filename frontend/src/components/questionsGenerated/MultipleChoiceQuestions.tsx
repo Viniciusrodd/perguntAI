@@ -9,15 +9,15 @@ import React from 'react';
 interface iquestion {
    id: string;
    prompt: string;
-   acceptableAnswers: string[];
+   choices: string[];
 }
 
 
 // multiple choice questions
-const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, acceptableAnswers}) => {
+const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, choices}) => {
    return (
       <div className={ styles.question_container } key={ id }>
-         { acceptableAnswers.length > 1 && (
+         { choices.length > 1 && (
             <>
                <div className={ styles.question }>
                   <div className={ styles.question_p_container }>
@@ -30,14 +30,14 @@ const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, acceptableAn
                   </div>
                </div>
 
-               { acceptableAnswers.map((acceptableAnswer, index) => (
+               { choices.map((choices, index) => (
                   <div className={ styles.question } key={`${id}-answer-${index}`}>
                      <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
                         <p className={ styles.question_p_id }>
                            -
                         </p>
                         <p className={ styles.question_p }>
-                           { acceptableAnswer }
+                           { choices }
                         </p>
                      </div>
                      <input 

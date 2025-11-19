@@ -61,22 +61,39 @@ const QuestionsGenerated = () => {
          </h1>
 
          <div className={ styles.questions }>
-            { questionSet.questions && questionSet.questions.map((question) =>(
-               <div className={ styles.question_container } key={ question.id }>
-                  { question.acceptableAnswers.length > 1 ? (
+            { questionSet.questions.length > 1 ? (
+               questionSet.questions.map((question) =>(
+                  <div className={ styles.question_container } key={ question.id }>
+                     { question.type == 'multipleChoice' ? (
+                        <MultipleChoiceQuestions 
+                           id={ question.id } 
+                           prompt={ question.prompt }
+                           choices={ question.choices! }
+                        />
+                     ) : (
+                        <OpenQuestions
+                           id={ question.id }
+                           prompt={ question.prompt }
+                        />
+                     ) }
+                  </div>
+               ))
+            ) : (
+               <div className={ styles.question_container } key={ questionSet.questions[0].id }>
+                  { questionSet.questions[0].type == 'multipleChoice' ? (
                      <MultipleChoiceQuestions 
-                        id={ question.id } 
-                        prompt={ question.prompt }
-                        acceptableAnswers={ question.acceptableAnswers }
+                        id={ questionSet.questions[0].id } 
+                        prompt={ questionSet.questions[0].prompt }
+                        choices={ questionSet.questions[0].choices! }
                      />
                   ) : (
                      <OpenQuestions
-                        id={ question.id }
-                        prompt={ question.prompt }
+                        id={ questionSet.questions[0].id }
+                        prompt={ questionSet.questions[0].prompt }
                      />
                   ) }
                </div>
-            )) }
+            )}
          </div>
 
          <h2 className={ styles.subtitle }>

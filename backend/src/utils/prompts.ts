@@ -5,68 +5,153 @@ import { iStudyMaterial } from "@interfaces/user.interfaces";
 import { iQuestionSession, iQuestionsSet, iQuestion } from "@interfaces/model.interfaces";
 
 
+// utils
+let questionType = '';
+let difficulty = '';
+let language = 'português';
+
+// question translate setup
+const questions_translate_setup = (
+   questionOptions: iGenerationOptions
+): void =>{
+   switch (questionOptions.questionType) {
+      case 'mix':
+         questionType = 'misturado';
+         break;
+      case 'multipleChoice':
+         questionType = 'múltipla escolha'
+         break;
+      case 'open':
+         questionType = 'aberto'
+         break;
+      default:
+         break;
+   }
+               
+   switch (questionOptions.difficulty) {
+      case 'basic':
+         difficulty = 'básico'
+         break;
+      case 'intermediate':
+         difficulty = 'intermediário'
+         break;
+      case 'advanced':
+         difficulty = 'avançado'
+         break;
+      default:
+         break;
+   }
+};
+
+
 // ollama question request - prompt
 export const prompt_question = (
    questionOptions: iGenerationOptions,
    studyMaterial: iStudyMaterial,
 ): string => {
-   if(questionOptions.language === 'portuguese' || 'português'){
-      return ` Você é uma IA responsável por gerar perguntas de estudo.
+   // translate
+   questions_translate_setup(questionOptions);
+
+   // prompt
+   if(questionOptions.language === 'portuguese'){
+      return `
+         Você é uma IA responsável por gerar perguntas de estudo.
 
          Com base no texto fornecido abaixo, gere exatamente ${questionOptions.numQuestions} 
-         perguntas do tipo ${questionOptions.questionType}, 
-         com nível de dificuldade ${questionOptions.difficulty}, 
-         e no idioma ${questionOptions.language}.
+         perguntas do tipo ${questionType}, 
+         com nível de dificuldade ${difficulty},
+         e no idioma português.
 
          Cada pergunta deve ser coerente com o conteúdo do texto e conter respostas 
          aceitáveis (sinônimos e variações curtas).
 
-         Regras obrigatórias:
-            1. Retorne apenas JSON puro (sem explicações, comentários ou texto fora do objeto).
-            2. O JSON deve ser uma lista de objetos seguindo exatamente o formato abaixo:
-            [
-               {
-                  "id": "string (UUID gerado por você, ex: q1)",
-                  "prompt": "texto da pergunta",
-                  "acceptableAnswers": ["resposta1", "resposta2"],
-                  "type": "open" ou "multipleChoice" ou "mix",
-                  "choices": ["opção1", "opção2", "opção3", "opção4"] (opcional)
-               }
-            ]
-            3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices".
-            4. Todas as respostas devem estar coerentes com o texto base.
-            5. Não repita perguntas e não gere respostas genéricas.
+         ! Regras obrigatórias:
+         1. Retorne apenas JSON puro (sem explicações, comentários ou texto fora do objeto).
+         2. O JSON deve ser uma lista de objetos seguindo exatamente o formato abaixo:
+         [
+         {
+            "id": "string (UUID gerado por você, ex: q1)",
+            "prompt": "texto da pergunta",
+            "acceptableAnswers": ["resposta correta 1", "resposta correta 2"],
+            "type": "open" ou "multipleChoice" ou "mix",
+            "choices": [
+               "A) alternativa incorreta",
+               "B) alternativa correta",
+               "C) alternativa incorreta"
+            ] (opcional)
+         }
+         ]
+         3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices".
+         4. Todas as respostas devem estar coerentes com o texto base.
+         5. Não repita perguntas e não gere respostas genéricas.
 
-         Texto base: ${studyMaterial.text}
-         `
+         ! Regras adicionais PARA perguntas do tipo "multipleChoice":
+         - Cada pergunta deve ter exatamente 3 alternativas.
+         - A alternativa correta deve ser SEMPRE a letra **B)**.
+         - A alternativa **B)** deve ser literalmente igual a um dos valores de "acceptableAnswers".
+         - As alternativas **A)** e **C)** devem ser erradas, porém plausíveis.
+         - As alternativas A e C não devem ser sinônimos da correta.
+         - NÃO gere alternativas vagas ou genéricas.
+         - Nunca coloque mais de uma alternativa correta.
+         - O formato das alternativas deve ser STRICTO e SEMPRE assim:
+         "A) ...",
+         "B) ...",
+         "C) ..."
+
+         ! Saída fora desse formato deve ser considerada inválida.
+
+         Texto base:
+         ${studyMaterial.text}
+      `
    }else{
       return ` 
-         You are an AI generating study questions.
-   
+         You are an AI responsible for generating study questions.
+
          Based on the text provided below, generate exactly ${questionOptions.numQuestions} 
-         questions of type ${questionOptions.questionType}
-         with difficulty level ${questionOptions.difficulty}, and in language ${questionOptions.language}.
-   
-         Each question must be consistent with the content and contain acceptable answers 
-         (synonyms and short variations).
-   
-         Mandatory rules:
-            1. Return only plain JSON (no explanation, no comments).
-            2. The JSON must be a list of objects following the format below exactly:
-            [
-               {
-                  "id": "string (UUID generated by you, e.g., q1)",
-                  "prompt": "question text",
-                  "acceptableAnswers": ["answer1", "answer2"],
-                  "type": "open" or "multipleChoice" or "mix",
-                  "choices": ["choice1", "choice2", "choice3", "choice4"] (optional)
-               }
-            ]
-            3. If the question type is "open", DO NOT include the "choices" field.
-            4. All answers must be consistent with the text provided.
-            5. Do not repeat questions or generate generic answers.
-   
-         Base text: ${studyMaterial.text}
+         questions of type ${questionType},
+         with difficulty level ${difficulty},
+         and in the English language.
+
+         Each question must be consistent with the content of the text and contain
+         acceptable answers (synonyms and short variations).
+
+         ! Mandatory rules:
+         1. Return ONLY pure JSON (no explanations, no comments).
+         2. The JSON must be a list of objects following this exact structure:
+         [
+         {
+            "id": "string (UUID generated by you, e.g., q1)",
+            "prompt": "question text",
+            "acceptableAnswers": ["correct answer 1", "correct answer 2"],
+            "type": "open" or "multipleChoice" or "mix",
+            "choices": [
+               "A) incorrect option",
+               "B) correct option",
+               "C) incorrect option"
+            ] (optional)
+         }
+         ]
+         3. If the question type is "open", DO NOT include the "choices" field.
+         4. All answers must be coherent with the source text.
+         5. Do not repeat questions or generate generic content.
+
+         ! Additional rules for MULTIPLE-CHOICE questions:
+         - Each question MUST have exactly 3 options.
+         - The correct option MUST ALWAYS be letter **B)**.
+         - Option **B)** MUST match exactly one of the values in "acceptableAnswers".
+         - Options **A)** and **C)** must be incorrect but plausible.
+         - A and C cannot be synonyms of the correct option.
+         - DO NOT generate vague or generic options.
+         - Never include more than one correct option.
+         - The format of the choices MUST follow this EXACT pattern:
+         "A) ...",
+         "B) ...",
+         "C) ..."
+
+         ! Any output not following this structure is invalid.
+
+         Base text:
+         ${studyMaterial.text}
       `;
    }
 }
