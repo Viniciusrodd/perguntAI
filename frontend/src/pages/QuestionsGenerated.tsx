@@ -2,6 +2,9 @@
 // import css
 import styles from '../styles/QuestionsGenerated.module.css';
 
+// import images
+import home_img from '../../public/images/questions/home.png';
+
 // import hooks
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -50,6 +53,11 @@ const QuestionsGenerated = () => {
          navigate
       ]);
 
+   // welcome redirect
+   const welcome_redirect = () =>{
+      navigate('/');
+   };
+
 
    //// jsx
 
@@ -95,6 +103,18 @@ const QuestionsGenerated = () => {
                </div>
             )}
          </div>
+
+         <button 
+            type='button'
+            data-tooltip='Retornar á tela inicial' 
+            className={`tooltip_btt tooltip`}>
+            <img 
+               src={ home_img } 
+               alt="home"
+               className={ styles.home_img }
+               onClick={ welcome_redirect }
+            />
+         </button>
 
          <h2 className={ styles.subtitle }>
             questões geradas pela ollama - mistral IA

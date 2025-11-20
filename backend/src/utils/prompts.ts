@@ -81,9 +81,10 @@ export const prompt_question = (
             ] (opcional)
          }
          ]
-         3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices" e não faça referência as "acceptableAnswers" no "prompt".
-         4. Todas as respostas devem estar coerentes com o texto base.
-         5. Não repita perguntas e não gere respostas genéricas.
+         3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices" gere as "acceptableAnswers", mas não faça referência a elas na pergunta.
+         4. Se o tipo de pergunta for "mix", faça perguntas que alternem entre com e sem o campo "choices"
+         5. Todas as respostas devem estar coerentes com o texto base.
+         6. Não repita perguntas e não gere respostas genéricas.
 
          ! Regras adicionais PARA perguntas do tipo "multipleChoice" E que possui o campo "choices":
          - Cada pergunta deve ter exatamente 3 alternativas.
@@ -131,9 +132,10 @@ export const prompt_question = (
             ] (optional)
          }
          ]
-         3. If the question type is "open", DO NOT include the "choices" field and make no reference to the "acceptableAnswers" field in the "prompt".
-         4. All answers must be coherent with the source text.
-         5. Do not repeat questions or generate generic content.
+         3. If the question type is "open", DO NOT include the "choices" field, generate the "acceptableAnswers", but not reference them in the question.
+         4. If the question type is "mix", ask questions that alternate between having and not having the "choices" field. 
+         5. All answers must be coherent with the source text.
+         6. Do not repeat questions or generate generic content.
 
          ! Additional rules for MULTIPLE-CHOICE questions AND that has the "choices" field:
          - Each question MUST have exactly 3 options.
