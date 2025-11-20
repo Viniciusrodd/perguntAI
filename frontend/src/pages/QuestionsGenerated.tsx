@@ -64,7 +64,7 @@ const QuestionsGenerated = () => {
             { questionSet.questions.length > 1 ? (
                questionSet.questions.map((question) =>(
                   <div className={ styles.question_container } key={ question.id }>
-                     { question.type == 'multipleChoice' ? (
+                     { question.choices ? (
                         <MultipleChoiceQuestions 
                            id={ question.id } 
                            prompt={ question.prompt }

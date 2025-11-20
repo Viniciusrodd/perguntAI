@@ -117,7 +117,6 @@
       /* Reset básico */
       -webkit-appearance: none;
       appearance: none;
-      
       height: 15px;
       width: 15px;
       border: none;
@@ -131,9 +130,14 @@
       border: 3px solid white;
    }
 
-   .correct_img{
-      height: 25px;
-      width: 25px;
+   .responded_img{
+      height: 28px;
+      width: 28px;
+      cursor: pointer;
+      transition: ease-in-out transform 0.2s;
+   }
+   .responded_img:hover{
+      transform: scale(1.05);
    }
 }
 

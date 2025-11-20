@@ -72,7 +72,7 @@ export const prompt_question = (
          {
             "id": "string (UUID gerado por você, ex: q1)",
             "prompt": "texto da pergunta",
-            "acceptableAnswers": ["resposta correta 1", "resposta correta 2"],
+            "acceptableAnswers": ["resposta correta 1", "resposta correta 1"],
             "type": "open" ou "multipleChoice" ou "mix",
             "choices": [
                "A) alternativa incorreta",
@@ -81,11 +81,11 @@ export const prompt_question = (
             ] (opcional)
          }
          ]
-         3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices".
+         3. Se o tipo de pergunta for "open", NÃO inclua o campo "choices" e não faça referência as "acceptableAnswers" no "prompt".
          4. Todas as respostas devem estar coerentes com o texto base.
          5. Não repita perguntas e não gere respostas genéricas.
 
-         ! Regras adicionais PARA perguntas do tipo "multipleChoice":
+         ! Regras adicionais PARA perguntas do tipo "multipleChoice" E que possui o campo "choices":
          - Cada pergunta deve ter exatamente 3 alternativas.
          - A alternativa correta deve ser SEMPRE a letra **B)**.
          - A alternativa **B)** deve ser literalmente igual a um dos valores de "acceptableAnswers".
@@ -131,11 +131,11 @@ export const prompt_question = (
             ] (optional)
          }
          ]
-         3. If the question type is "open", DO NOT include the "choices" field.
+         3. If the question type is "open", DO NOT include the "choices" field and make no reference to the "acceptableAnswers" field in the "prompt".
          4. All answers must be coherent with the source text.
          5. Do not repeat questions or generate generic content.
 
-         ! Additional rules for MULTIPLE-CHOICE questions:
+         ! Additional rules for MULTIPLE-CHOICE questions AND that has the "choices" field:
          - Each question MUST have exactly 3 options.
          - The correct option MUST ALWAYS be letter **B)**.
          - Option **B)** MUST match exactly one of the values in "acceptableAnswers".

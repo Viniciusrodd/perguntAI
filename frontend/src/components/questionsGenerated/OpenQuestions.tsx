@@ -3,7 +3,8 @@
 import styles from '../../styles/QuestionsGenerated.module.css';
 
 // import image
-import correctImg from '../../../public/images/questions/correct.png';
+//import correctImg from '../../../public/images/questions/correct.png';
+import eye from '../../../public/images/questions/eye.png';
 
 // import hooks
 import React, { useState, useEffect } from 'react';
@@ -28,6 +29,7 @@ const OpenQuestions: React.FC<iquestion> = ({
 }) => {
    //// variables
    const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
+   const [ userResponse, setUserResponse ] = useState<string>('');
 
 
    //// functions
@@ -46,13 +48,23 @@ const OpenQuestions: React.FC<iquestion> = ({
 
    // handle response cancel btt click
    const handleCancelResponse = (questionId: string) => {
-      setQuestionState(prev => ({
-         ...prev,
-         [questionId]: {
-            responding: false,
-            responded: false
-         }
-      }));
+      if(userResponse == ''){
+         setQuestionState(prev => ({
+            ...prev,
+            [questionId]: {
+               responding: false,
+               responded: false
+            }
+         }));
+      }else{
+         setQuestionState(prev => ({
+            ...prev,
+            [questionId]: {
+               responding: false,
+               responded: true
+            }
+         }));
+      }
    };      
 
    // handle response btt
@@ -95,18 +107,20 @@ const OpenQuestions: React.FC<iquestion> = ({
             </button>
          ) : !questionState[id]?.responding && questionState[id]?.responded ? (
             <img 
-               src={ correctImg } 
-               alt="correct_img"  
-               className={ styles.correct_img }
+               src={ eye } 
+               alt="eye_img"  
+               className={ styles.responded_img }
+               onClick={ () => handleResponseClick(id) }
             />
          ) : (
             <div className={ styles.question_answer_container }>
                <input 
                   type="text" 
                   name="userResponse" 
-                  placeholder='Insira sua resposta' 
+                  placeholder={ userResponse == '' ? 'Insira sua resposta' : `${userResponse}` } 
                   autoComplete='off'
                   className={ styles.input_response }
+                  onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setUserResponse(e.target.value) }
                />
                <button 
                   type='button' 
