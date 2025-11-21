@@ -7,7 +7,7 @@ import styles from '../../styles/QuestionsGenerated.module.css';
 import eye from '../../../public/images/questions/eye.png';
 
 // import hooks
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // custom interface
 interface iquestion {
@@ -21,6 +21,10 @@ type QuestionState = {
    responded: boolean;
 };
 
+type Response = {
+   response: string;
+}
+
 
 // open questions
 const OpenQuestions: React.FC<iquestion> = ({ 
@@ -29,7 +33,7 @@ const OpenQuestions: React.FC<iquestion> = ({
 }) => {
    //// variables
    const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
-   const [ userResponse, setUserResponse ] = useState<string>('');
+   const [ userResponse, setUserResponse ] = useState<{ [key: string]: Response }>({});
 
 
    //// functions
@@ -48,23 +52,13 @@ const OpenQuestions: React.FC<iquestion> = ({
 
    // handle response cancel btt click
    const handleCancelResponse = (questionId: string) => {
-      if(userResponse == ''){
-         setQuestionState(prev => ({
-            ...prev,
-            [questionId]: {
-               responding: false,
-               responded: false
-            }
-         }));
-      }else{
-         setQuestionState(prev => ({
-            ...prev,
-            [questionId]: {
-               responding: false,
-               responded: true
-            }
-         }));
-      }
+      setQuestionState(prev => ({
+         ...prev,
+         [questionId]: {
+            responding: false,
+            responded: false
+         }
+      }));
    };      
 
    // handle response btt
@@ -78,9 +72,15 @@ const OpenQuestions: React.FC<iquestion> = ({
       }));
    };
 
-   useEffect(() =>{
-      console.log('question state: ', questionState);
-   }, [ questionState, setQuestionState ])
+   // user response
+   const handleUserResponse = (questionId: string, value: string) =>{
+      setUserResponse(prev => ({
+         ...prev,
+         [questionId]: {
+            response: value
+         }
+      }))
+   };
 
 
    //// jsx
@@ -109,7 +109,8 @@ const OpenQuestions: React.FC<iquestion> = ({
             <img 
                src={ eye } 
                alt="eye_img"  
-               className={ styles.responded_img }
+               data-tooltip='Visualizar a resposta' 
+               className={ `${styles.responded_img} tooltip_btt tooltip}` }
                onClick={ () => handleResponseClick(id) }
             />
          ) : (
@@ -117,10 +118,10 @@ const OpenQuestions: React.FC<iquestion> = ({
                <input 
                   type="text" 
                   name="userResponse" 
-                  placeholder={ userResponse == '' ? 'Insira sua resposta' : `${userResponse}` } 
+                  placeholder={ userResponse[id]?.response || 'Insira sua resposta' } 
                   autoComplete='off'
                   className={ styles.input_response }
-                  onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setUserResponse(e.target.value) }
+                  onChange={ (e: React.ChangeEvent<HTMLInputElement>) => handleUserResponse(id, e.target.value) }
                />
                <button 
                   type='button' 

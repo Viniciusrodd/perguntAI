@@ -16,7 +16,7 @@ interface iquestion {
 // multiple choice questions
 const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, choices}) => {
    return (
-      <div className={ styles.question_container } key={ id }>
+      <div className={ `${styles.question_container} ${styles.question_container_2}` }key={ id }>
          { choices.length > 1 && (
             <>
                <div className={ styles.question }>

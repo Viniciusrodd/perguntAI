@@ -6,8 +6,7 @@ import styles from '../styles/QuestionsGenerated.module.css';
 import home_img from '../../public/images/questions/home.png';
 
 // import hooks
-import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import context
@@ -22,36 +21,12 @@ import OpenQuestions from '../components/questionsGenerated/OpenQuestions';
 const QuestionsGenerated = () => {
 
    //// variables
-   const { sessionID } = useParams<{ sessionID: string }>();
    const navigate = useNavigate();
-   const { 
-      sessionId,
-      questionSet,
-      answers,
-      currentIndex,
-      finished 
-   } = useContext(QuestionSessionContext);
+   const { questionSet } = useContext(QuestionSessionContext);
 
 
    //// functions
 
-
-   useEffect(() =>{
-      //if(!sessionID || sessionID !== sessionId) navigate('/');
-      console.log(sessionId);
-      console.log(questionSet);
-      console.log(answers);
-      console.log(currentIndex);
-      console.log(finished);
-   }, [
-         sessionID,
-         sessionId,
-         questionSet,
-         answers,
-         currentIndex,
-         finished,
-         navigate
-      ]);
 
    // welcome redirect
    const welcome_redirect = () =>{
@@ -104,6 +79,10 @@ const QuestionsGenerated = () => {
             )}
          </div>
 
+         <button type='button' className={ styles.btt_sendAnswers }>
+            Enviar respostas
+         </button>
+
          <button 
             type='button'
             data-tooltip='Retornar á tela inicial' 
@@ -115,10 +94,6 @@ const QuestionsGenerated = () => {
                onClick={ welcome_redirect }
             />
          </button>
-
-         <h2 className={ styles.subtitle }>
-            questões geradas pela ollama - mistral IA
-         </h2>
       </div>
    );
 };

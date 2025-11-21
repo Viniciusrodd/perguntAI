@@ -100,7 +100,6 @@ const BaseText = () => {
                onChange={ (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value) }
                maxLength={ 6000 }
             ></textarea>
-            <p>*esse texto servirá de base para as questões</p>
             <p>*limite de 6 mil caracteres...</p>
          </div>
 
