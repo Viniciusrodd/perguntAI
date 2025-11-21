@@ -13,4 +13,5 @@ export interface iEvaluationResult {
    generatedAt: string | number | Date;
    questionSet: iQuestionsSet;
    userAnswers: iUserAnswer[];
+   pdfPath?: string;
 };

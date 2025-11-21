@@ -23,7 +23,7 @@ router.post(
 
 // user - routes
 router.post(
-   '/answers/:questionId', 
+   '/answers', 
    ollamaMiddleware,
-   userController.answerGeneration.bind(userController)
+   userController.answersGeneration.bind(userController)
 );

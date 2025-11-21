@@ -5,6 +5,7 @@ import axios from "axios";
 // import interfaces
 import { iUserAnswer, iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces";
 import { iQuestion, iQuestionsSet, iQuestionSession } from "@interfaces/model.interfaces";
+import { iUserResponse } from "@interfaces/userController.interfaces";
 
 // import error handler
 import { getErrorMessage } from "@root/utils/errorHandler";
@@ -61,19 +62,25 @@ class ModelService {
    
    // ollama user response request - public
    public async ollamaAnswerRequest(
-      questionId: string, 
-      userResponse: string,
+      userResponses: iUserResponse[],
       questionSession: iQuestionSession
 
-   ): Promise<iUserAnswer> {
+   ): Promise<iUserAnswer[]> {
       try{
          // validations
-         if(questionId === '') throw new Error('❌ Question id is empty');
-         if(userResponse === '') throw new Error('❌ User response is empty');
+         if(userResponses.length == 0) throw new Error('❌ User response is empty');
          if(questionSession.finished === true) throw new Error('❌ Question session already finished');
 
+         // split (questions ids) and (questions responses)
+         const questionIds = userResponses.map(r => r.questionId);
+         const responses = userResponses.map(r => r.userResponse);
+
          // prompt generation
-         const prompt: string = prompt_answer(questionId, userResponse, questionSession);
+         const prompt: string = prompt_answer(
+            questionIds, 
+            responses, 
+            questionSession
+         );
 
          // get model response
          const llm_response = await axios.post(process.env.OLLAMA_URL as string, {
@@ -89,7 +96,7 @@ class ModelService {
          const clean = result.trim();
 
          // convert clean result to object
-         const parsedResult: iUserAnswer = JSON.parse(clean);
+         const parsedResult: iUserAnswer[] = JSON.parse(clean);
          return parsedResult;
       }
       catch(error: unknown){

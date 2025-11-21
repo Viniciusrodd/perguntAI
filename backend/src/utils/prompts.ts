@@ -161,11 +161,14 @@ export const prompt_question = (
 
 // ollama user response request - prompt
 export const prompt_answer = (
-   questionId: string,
-   userResponse: string,
+   questionId: string[],
+   userResponses: string[],
    questionSession: iQuestionSession
 ): string => {
-   if(questionSession.questionSet.options.language === 'portuguese' || 'português'){
+   if(
+      questionSession.questionSet.options.language === 'portuguese' || 
+      questionSession.questionSet.options.language === 'português'
+   ){
       return ` Você é uma IA responsável por avaliar a resposta de um estudante em uma sessão de estudos.
    
          Analise se a resposta do estudante está correta ou incorreta com base na pergunta original e 
@@ -177,8 +180,8 @@ export const prompt_answer = (
          ${JSON.stringify(questionSession, null, 2)}
    
          🔹 Dados da resposta:
-         - ID da questão: ${questionId}
-         - Resposta do estudante: "${userResponse}"
+         - ID's da questões: ${questionId}
+         - Respostas do estudante: "${userResponses}"
    
          ---
    
@@ -193,14 +196,17 @@ export const prompt_answer = (
    
          O JSON DE SAÍDA DEVE SEGUIR EXATAMENTE ESTE MODELO:
    
-         EXEMPLO (em ${questionSession.questionSet.options.language}):
-   
-         {
-            "questionId": "q1",
-            "userResponse": "São Paulo",
-            "isCorrect": false,
-            "feedback": "Incorreto. A resposta certa é: Ulm."
-         }
+         EXEMPLO (em português):
+
+         [
+            {
+               "questionId": "q1",
+               "userResponse": "São Paulo",
+               "isCorrect": false,
+               "feedback": "Incorreto. A resposta certa é: Ulm."
+            },
+            repete o objeto (caso haja mais questões)
+         ]
    
          Agora avalie a questão indicada.
       `
@@ -213,7 +219,7 @@ export const prompt_answer = (
          Context:
             - You will receive the entire study session object ${questionSession}.
             - Use only the question whose "id" matches the provided questionId.
-            - Compare the user's response ${userResponse} against the 
+            - Compare the user's response ${userResponses} against the 
             "acceptableAnswers" ${questionSession.questionSet.questions} field 
             of that question (case-insensitive and allowing close synonyms).
             - Your feedback will be in this language: ${questionSession.questionSet.options.language}
@@ -221,13 +227,16 @@ export const prompt_answer = (
          Rules:
             1. Return only plain JSON (no explanations, no markdown, no comments).
             2. The JSON must be a single object following EXACTLY this format:
-               {
-                  "questionId": "string (same as provided)",
-                  "userResponse": "string (student's answer)",
-                  "isCorrect": boolean,
-                  "feedback": "string (short feedback, optional if correct) and need be
-                  is this language: ${questionSession.questionSet.options.language}"
-               }
+               [
+                  {
+                     "questionId": "string (same as provided)",
+                     "userResponse": "string (student's answer)",
+                     "isCorrect": boolean,
+                     "feedback": "string (short feedback, optional if correct) and need be
+                     is this language: english"
+                  }
+                  repeat the object (if there's more questions)
+               ]
             3. Mark as correct if the user's response matches or closely resembles 
                any acceptable answer (ignore case, accents, punctuation differences).
             4. If incorrect or partially correct, return a short feedback string like:
@@ -240,7 +249,7 @@ export const prompt_answer = (
          Evaluate the following session data:
          {
             "questionId": "${questionId}",
-            "userResponse": "${userResponse}",
+            "userResponse": "${userResponses}",
             "questionSession": ${JSON.stringify(questionSession, null, 2)}
          }
       `
