@@ -6,7 +6,7 @@ import styles from '../styles/QuestionsGenerated.module.css';
 import home_img from '../../public/images/questions/home.png';
 
 // import hooks
-import { useContext} from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import context
@@ -23,6 +23,8 @@ const QuestionsGenerated = () => {
    //// variables
    const navigate = useNavigate();
    const { questionSet } = useContext(QuestionSessionContext);
+   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<{ [key: string]: string }>({});
+   const [openQuestionAnswers, setOpenQuestionAnswers] = useState<{ [key: string]: string }>({});
 
 
    //// functions
@@ -31,6 +33,35 @@ const QuestionsGenerated = () => {
    // welcome redirect
    const welcome_redirect = () =>{
       navigate('/');
+   };
+
+   // handle multiple choices
+   const handleMultipleChoiceAnswer = (questionId: string, answer: string) => {
+      setMultipleChoiceAnswers(prev => ({
+         ...prev,
+         [questionId]: answer
+      }));
+   };
+
+   // handle open question
+   const handleOpenQuestionAnswer = (questionId: string, answer: string) => {
+      setOpenQuestionAnswers(prev => ({
+         ...prev,
+         [questionId]: answer
+      }));
+   };
+
+   // send response
+   const sendResponses = () =>{
+      const allAnswers = {
+         multipleChoice: multipleChoiceAnswers,
+         openQuestions: openQuestionAnswers
+      };
+
+      console.log('open questions answers: ', allAnswers.openQuestions);
+      console.log('multiple questions answers: ', allAnswers.multipleChoice);
+
+      // call service...
    };
 
 
@@ -52,11 +83,13 @@ const QuestionsGenerated = () => {
                            id={ question.id } 
                            prompt={ question.prompt }
                            choices={ question.choices! }
+                           onAnswerSelect={ handleMultipleChoiceAnswer }
                         />
                      ) : (
                         <OpenQuestions
                            id={ question.id }
                            prompt={ question.prompt }
+                           onAnswerSubmit={ handleOpenQuestionAnswer }
                         />
                      ) }
                   </div>
@@ -68,18 +101,20 @@ const QuestionsGenerated = () => {
                         id={ questionSet.questions[0].id } 
                         prompt={ questionSet.questions[0].prompt }
                         choices={ questionSet.questions[0].choices! }
+                        onAnswerSelect={ handleMultipleChoiceAnswer }
                      />
                   ) : (
                      <OpenQuestions
                         id={ questionSet.questions[0].id }
                         prompt={ questionSet.questions[0].prompt }
+                        onAnswerSubmit={ handleOpenQuestionAnswer }
                      />
                   ) }
                </div>
             )}
          </div>
 
-         <button type='button' className={ styles.btt_sendAnswers }>
+         <button type='button' className={ styles.btt_sendAnswers } onClick={ sendResponses }>
             Enviar respostas
          </button>
 

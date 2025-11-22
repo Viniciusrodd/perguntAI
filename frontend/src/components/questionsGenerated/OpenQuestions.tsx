@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 interface iquestion {
    id: string;
    prompt: string;
+   onAnswerSubmit: (questionId: string, answer: string) => void;
 }
 
 // types
@@ -29,7 +30,8 @@ type Response = {
 // open questions
 const OpenQuestions: React.FC<iquestion> = ({ 
    id, 
-   prompt
+   prompt,
+   onAnswerSubmit
 }) => {
    //// variables
    const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
@@ -61,17 +63,6 @@ const OpenQuestions: React.FC<iquestion> = ({
       }));
    };      
 
-   // handle response btt
-   const handleResponseSend_btt = (questionId: string) =>{
-      setQuestionState(prev => ({
-         ...prev,
-         [questionId]: {
-            responding: false,
-            responded: true
-         }
-      }));
-   };
-
    // user response
    const handleUserResponse = (questionId: string, value: string) =>{
       setUserResponse(prev => ({
@@ -80,6 +71,22 @@ const OpenQuestions: React.FC<iquestion> = ({
             response: value
          }
       }))
+   };
+
+   // handle response btt + call onAnswerSubmit
+   const handleResponseSend_btt = (questionId: string) =>{
+      setQuestionState(prev => ({
+         ...prev,
+         [questionId]: {
+            responding: false,
+            responded: true
+         }
+      }));
+
+      // call onAnswerSubmit
+      if(userResponse[questionId]?.response){
+         onAnswerSubmit(questionId, userResponse[questionId].response);
+      }
    };
 
 
