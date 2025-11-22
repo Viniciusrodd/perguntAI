@@ -17,14 +17,19 @@ import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleCh
 import OpenQuestions from '../components/questionsGenerated/OpenQuestions';
 
 
+import type { 
+   iAnswerGenerationReqBody, iUserResponse
+} from '../../../shared/interfaces/userController.interfaces';
+
+
 // questions generated
 const QuestionsGenerated = () => {
 
    //// variables
    const navigate = useNavigate();
-   const { questionSet } = useContext(QuestionSessionContext);
-   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<{ [key: string]: string }>({});
-   const [openQuestionAnswers, setOpenQuestionAnswers] = useState<{ [key: string]: string }>({});
+   const { sessionId, questionSet, answers, finished } = useContext(QuestionSessionContext);
+   const [ multipleChoiceAnswers, setMultipleChoiceAnswers ] = useState<{ [key: string]: string }>({});
+   const [ openQuestionAnswers, setOpenQuestionAnswers ] = useState<{ [key: string]: string }>({});
 
 
    //// functions
@@ -53,13 +58,37 @@ const QuestionsGenerated = () => {
 
    // send response
    const sendResponses = () =>{
-      const allAnswers = {
-         multipleChoice: multipleChoiceAnswers,
-         openQuestions: openQuestionAnswers
+      const userResponses: iUserResponse[] = [];
+
+      // multiple answers - build
+      Object.entries(multipleChoiceAnswers).forEach(([questionId, userResponse]) => {
+         userResponses.push({
+            questionId,
+            userResponse
+         });
+      });
+
+      // open answers - build
+      Object.entries(openQuestionAnswers).forEach(([questionId, userResponse]) => {
+         userResponses.push({
+            questionId,
+            userResponse
+         });
+      });
+
+      // request body - build
+      const requestBody: iAnswerGenerationReqBody = {
+         userResponses,
+         questionSession: {
+            sessionId,
+            questionSet,
+            answers,
+            currentIndex: 1,
+            finished
+         }
       };
 
-      console.log('open questions answers: ', allAnswers.openQuestions);
-      console.log('multiple questions answers: ', allAnswers.multipleChoice);
+      console.log('final request: ', requestBody);
 
       // call service...
    };
