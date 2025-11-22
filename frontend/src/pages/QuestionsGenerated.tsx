@@ -4,6 +4,7 @@ import styles from '../styles/QuestionsGenerated.module.css';
 
 // import images
 import home_img from '../../public/images/questions/home.png';
+import loadingImg from '../../public/images/home/loading.png';
 
 // import hooks
 import { useContext, useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import context
 import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSession.context';
+import { LoadingContext } from '../contexts/Loading/Loading.context';
 
 // import conmponents
 import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
@@ -32,7 +34,9 @@ const QuestionsGenerated = () => {
 
    //// variables
    const navigate = useNavigate();
-   const { sessionId, questionSet, answers, finished } = useContext(QuestionSessionContext);
+
+   // states
+   const [ redirect, setRedirect ] = useState<boolean>(false);
    const [ multipleChoiceAnswers, setMultipleChoiceAnswers ] = useState<{ [key: string]: string }>({});
    const [ openQuestionAnswers, setOpenQuestionAnswers ] = useState<{ [key: string]: string }>({});
    const [ modal_display, setModal_display ] = useState<boolean>(false);
@@ -40,8 +44,12 @@ const QuestionsGenerated = () => {
    const [ modal_msg, setModal_msg ] = useState<string>('');
    const [ modal_btt, setmodal_btt ] = useState<boolean | string>(false);
    const [ modal_btt_2, setModal_btt_2 ] = useState<boolean | string>(false);
-   const [ redirect, setRedirect ] = useState<boolean>(false);
-
+   const [ questions_responded, set_questions_responded ] = useState<boolean>(false);
+   
+   // contexts
+   const { sessionId, questionSet, answers, finished } = useContext(QuestionSessionContext);
+   const { loading, setLoading } = useContext(LoadingContext);
+   
 
    //// functions
 
@@ -55,6 +63,9 @@ const QuestionsGenerated = () => {
                btt2: false, display: false
             });
 
+            setLoading(false);
+            set_questions_responded(false);
+
             navigate(`/evaluation`);            
          }, 6000);
 
@@ -62,7 +73,7 @@ const QuestionsGenerated = () => {
             clearTimeout(clearMessage);
          };
       }
-   }, [redirect, navigate]);
+   }, [redirect, navigate, setLoading, set_questions_responded]);
    
    // modal config
    const modal_config = ({ title, msg, btt1, btt2, display }: iModalConfig) => {
@@ -104,6 +115,9 @@ const QuestionsGenerated = () => {
 
    // send response
    const sendResponses = async () =>{
+      setLoading(true);
+      set_questions_responded(true);
+
       const userResponses: iUserResponse[] = [];
 
       // multiple answers - build
@@ -190,12 +204,14 @@ const QuestionsGenerated = () => {
                            prompt={ question.prompt }
                            choices={ question.choices! }
                            onAnswerSelect={ handleMultipleChoiceAnswer }
+                           answersResponded={ questions_responded }
                         />
                      ) : (
                         <OpenQuestions
                            id={ question.id }
                            prompt={ question.prompt }
                            onAnswerSubmit={ handleOpenQuestionAnswer }
+                           answersResponded={ questions_responded }
                         />
                      ) }
                   </div>
@@ -208,33 +224,50 @@ const QuestionsGenerated = () => {
                         prompt={ questionSet.questions[0].prompt }
                         choices={ questionSet.questions[0].choices! }
                         onAnswerSelect={ handleMultipleChoiceAnswer }
+                        answersResponded={ questions_responded }
                      />
                   ) : (
                      <OpenQuestions
                         id={ questionSet.questions[0].id }
                         prompt={ questionSet.questions[0].prompt }
                         onAnswerSubmit={ handleOpenQuestionAnswer }
+                        answersResponded={ questions_responded }
                      />
                   ) }
                </div>
             )}
          </div>
 
-         <button type='button' className={ styles.btt_sendAnswers } onClick={ sendResponses }>
-            Enviar respostas
-         </button>
+         { loading ? (
+            <>
+               <img 
+                  src={ loadingImg } 
+                  alt="loading_png"
+                  className='loading_img' 
+               />
+               <p className='loading_msg'>
+                  Enviando as respostas...
+               </p>
+            </>
+         ) : (
+            <>
+               <button type='button' className={ styles.btt_sendAnswers } onClick={ sendResponses }>
+                  Enviar respostas
+               </button>
 
-         <button 
-            type='button'
-            data-tooltip='Retornar á tela inicial' 
-            className={`tooltip_btt tooltip`}>
-            <img 
-               src={ home_img } 
-               alt="home"
-               className={ styles.home_img }
-               onClick={ welcome_redirect }
-            />
-         </button>
+               <button 
+                  type='button'
+                  data-tooltip='Retornar á tela inicial' 
+                  className={`tooltip_btt tooltip`}>
+                  <img 
+                     src={ home_img } 
+                     alt="home"
+                     className={ styles.home_img }
+                     onClick={ welcome_redirect }
+                  />
+               </button>
+            </>
+         ) }
       </div>
    );
 };

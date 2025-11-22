@@ -3,8 +3,8 @@
 import styles from '../../styles/QuestionsGenerated.module.css';
 
 // import image
-//import correctImg from '../../../public/images/questions/correct.png';
 import eye from '../../../public/images/questions/eye.png';
+import loadingImg from '../../../public/images/home/loading.png';
 
 // import hooks
 import React, { useState } from 'react';
@@ -14,6 +14,7 @@ interface iquestion {
    id: string;
    prompt: string;
    onAnswerSubmit: (questionId: string, answer: string) => void;
+   answersResponded: boolean;
 }
 
 // types
@@ -31,7 +32,8 @@ type Response = {
 const OpenQuestions: React.FC<iquestion> = ({ 
    id, 
    prompt,
-   onAnswerSubmit
+   onAnswerSubmit,
+   answersResponded
 }) => {
    //// variables
    const [ questionState, setQuestionState ] = useState<{ [key: string]: QuestionState }>({});
@@ -112,13 +114,19 @@ const OpenQuestions: React.FC<iquestion> = ({
             >
                Responder
             </button>
-         ) : !questionState[id]?.responding && questionState[id]?.responded ? (
+         ) : !questionState[id]?.responding && questionState[id]?.responded && !answersResponded ? (
             <img 
                src={ eye } 
                alt="eye_img"  
                data-tooltip='Visualizar a resposta' 
                className={ `${styles.responded_img} tooltip_btt tooltip}` }
                onClick={ () => handleResponseClick(id) }
+            />
+         ) : answersResponded && !questionState[id]?.responding && questionState[id]?.responded ? (
+            <img 
+               src={ loadingImg } 
+               alt="loading_png"
+               className='loading_img' 
             />
          ) : (
             <div className={ styles.question_answer_container }>

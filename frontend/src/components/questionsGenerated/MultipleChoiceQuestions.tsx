@@ -2,6 +2,9 @@
 // import css
 import styles from '../../styles/QuestionsGenerated.module.css';
 
+// import images
+import loadingImg from '../../../public/images/home/loading.png';
+
 // import hooks
 import React from 'react';
 
@@ -11,11 +14,18 @@ interface iquestion {
    prompt: string;
    choices: string[];
    onAnswerSelect: (questionId: string, answer: string) => void;
+   answersResponded: boolean;
 }
 
 
 // multiple choice questions
-const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, choices, onAnswerSelect }) => {
+const MultipleChoiceQuestions: React.FC<iquestion> = ({ 
+   id, 
+   prompt, 
+   choices, 
+   onAnswerSelect,
+   answersResponded 
+}) => {
 
    // handle multiple choice
    const handleMultipleChoice = (choice: string) =>{
@@ -27,7 +37,7 @@ const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, choices, onA
 
 
    return (
-      <div className={ `${styles.question_container} ${styles.question_container_2}` }key={ id }>
+      <div className={ `${styles.question_container} ${styles.question_container_2}` } key={ id }>
          { choices.length > 0 && (
             <>
                <div className={ styles.question }>
@@ -41,25 +51,33 @@ const MultipleChoiceQuestions: React.FC<iquestion> = ({ id, prompt, choices, onA
                   </div>
                </div>
 
-               { choices.map((choice, index) => (
-                  <div className={ styles.question } key={`${id}-answer-${index}`}>
-                     <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
-                        <p className={ styles.question_p_id }>
-                           -
-                        </p>
-                        <p className={ styles.question_p }>
-                           { choice }
-                        </p>
+               { answersResponded ? (
+                  <img 
+                     src={ loadingImg } 
+                     alt="loading_png"
+                     className='loading_img' 
+                  />
+               ) : (
+                  choices.map((choice, index) => (
+                     <div className={ styles.question } key={`${id}-answer-${index}`}>
+                        <div className={ `${styles.question_p_container} ${styles.question_p_container_2}` }>
+                           <p className={ styles.question_p_id }>
+                              -
+                           </p>
+                           <p className={ styles.question_p }>
+                              { choice }
+                           </p>
+                        </div>
+                        <input 
+                           type="radio" 
+                           name={ `answer-${id}` } 
+                           title='answer' 
+                           className={ styles.radio }
+                           onChange={ () => handleMultipleChoice(choice) } 
+                        />
                      </div>
-                     <input 
-                        type="radio" 
-                        name={ `answer-${id}` } 
-                        title='answer' 
-                        className={ styles.radio }
-                        onChange={ () => handleMultipleChoice(choice) } 
-                     />
-                  </div>
-               ))}
+                  ))
+               ) }
             </>
          ) } 
       </div>
