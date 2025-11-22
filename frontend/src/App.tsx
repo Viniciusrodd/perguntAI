@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Homepage from './pages/Homepage';
 import QuestionsGenerated from './pages/QuestionsGenerated';
+import Evaluation from './pages/Evaluation';
 
 
 // app
@@ -20,7 +21,10 @@ function App() {
                <Route path='/' element={ <Welcome /> } />
                {/* homepage */}
                <Route path='/home/:destiny' element={ <Homepage /> } />               
+               {/* questions generated */}
                <Route path='/questions/:sessionID' element={ <QuestionsGenerated /> } />
+               {/* evaluation page */}
+               <Route path='/evaluation' element={ <Evaluation /> } />
 
                { /* not found route */ }
                <Route path='*' element={ <Welcome /> } />

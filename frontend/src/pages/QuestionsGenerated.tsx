@@ -6,7 +6,7 @@ import styles from '../styles/QuestionsGenerated.module.css';
 import home_img from '../../public/images/questions/home.png';
 
 // import hooks
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import context
@@ -15,6 +15,7 @@ import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSess
 // import conmponents
 import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
 import OpenQuestions from '../components/questionsGenerated/OpenQuestions';
+import Modal from '../components/Modal';
 
 // import services
 import { questionService } from '../services/question.service';
@@ -23,6 +24,7 @@ import { questionService } from '../services/question.service';
 import type { 
    iAnswerGenerationReqBody, iUserResponse
 } from '../../../shared/interfaces/userController.interfaces';
+import type { iModalConfig } from '../../../shared/interfaces/modal.interface';
 
 
 // questions generated
@@ -33,10 +35,51 @@ const QuestionsGenerated = () => {
    const { sessionId, questionSet, answers, finished } = useContext(QuestionSessionContext);
    const [ multipleChoiceAnswers, setMultipleChoiceAnswers ] = useState<{ [key: string]: string }>({});
    const [ openQuestionAnswers, setOpenQuestionAnswers ] = useState<{ [key: string]: string }>({});
+   const [ modal_display, setModal_display ] = useState<boolean>(false);
+   const [ modal_title, setModal_title ] = useState<string>('');
+   const [ modal_msg, setModal_msg ] = useState<string>('');
+   const [ modal_btt, setmodal_btt ] = useState<boolean | string>(false);
+   const [ modal_btt_2, setModal_btt_2 ] = useState<boolean | string>(false);
+   const [ redirect, setRedirect ] = useState<boolean>(false);
 
 
    //// functions
 
+
+   // redirect
+   useEffect(() =>{
+      if(redirect){
+         const clearMessage = setTimeout(() =>{
+            modal_config({
+               title: '', msg: '', btt1: false, 
+               btt2: false, display: false
+            });
+
+            navigate(`/evaluation`);            
+         }, 6000);
+
+         return () =>{
+            clearTimeout(clearMessage);
+         };
+      }
+   }, [redirect, navigate]);
+   
+   // modal config
+   const modal_config = ({ title, msg, btt1, btt2, display }: iModalConfig) => {
+      setModal_title(title ?? '');
+      setModal_msg(msg ?? '');
+      setmodal_btt(btt1 ?? false);
+      setModal_btt_2(btt2 ?? false);
+      setModal_display(display ?? false);
+   };   
+
+   // close modal
+   const closeModal = () =>{
+      modal_config({
+         title: '', msg: '', btt1: false, 
+         btt2: false, display: false
+      });
+   };
 
    // welcome redirect
    const welcome_redirect = () =>{
@@ -99,9 +142,21 @@ const QuestionsGenerated = () => {
          }
 
          console.log('✅ Evaluation result generated with success:', response);
+         modal_config({
+            title: 'Sucesso ✔️', 
+            msg: `🤖 Suas respostas foram enviadas 🤖 \n você será redirecionado para o relatório de avaliação...`, 
+            btt1: false, btt2: false, display: true
+         });
+
+         setRedirect(true);
       }
       catch(error){
          console.error('❌ Error at answers generations service request', error);
+         modal_config({
+            title: 'Só um segundo ❗️', 
+            msg: `Erro interno ao enviar respostas ❌`, 
+            btt1: false, btt2: 'Voltar', display: true
+         });
       }
    };
 
@@ -111,6 +166,16 @@ const QuestionsGenerated = () => {
 
    return (
       <div className={ styles.questions_container }>
+         { /* modal */ }
+         <Modal 
+            title={ modal_title }
+            msg={ modal_msg }
+            btt1={ modal_btt }
+            btt2={ modal_btt_2 }
+            display={ modal_display }
+            onClose={ closeModal }
+         />          
+         
          <h1 className={ styles.title }>
             Questões geradas
          </h1>
