@@ -16,7 +16,10 @@ import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSess
 import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
 import OpenQuestions from '../components/questionsGenerated/OpenQuestions';
 
+// import services
+import { questionService } from '../services/question.service';
 
+// types
 import type { 
    iAnswerGenerationReqBody, iUserResponse
 } from '../../../shared/interfaces/userController.interfaces';
@@ -57,7 +60,7 @@ const QuestionsGenerated = () => {
    };
 
    // send response
-   const sendResponses = () =>{
+   const sendResponses = async () =>{
       const userResponses: iUserResponse[] = [];
 
       // multiple answers - build
@@ -88,9 +91,18 @@ const QuestionsGenerated = () => {
          }
       };
 
-      console.log('final request: ', requestBody);
+      // question service...
+      try{
+         const response = await questionService.answersGeneration(requestBody);
+         if(!response){
+            console.error('⚠️ Unexpected return from API:', response);
+         }
 
-      // call service...
+         console.log('✅ Evaluation result generated with success:', response);
+      }
+      catch(error){
+         console.error('❌ Error at answers generations service request', error);
+      }
    };
 
 

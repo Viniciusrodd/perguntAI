@@ -165,7 +165,7 @@ const Language = () => {
          // send question options
          const response = await questionService.questionGeneration(options, material);
          if(!response){
-            console.error('⚠️ Retorno inesperado da API:', response);
+            console.error('⚠️ Unexpected return from API:', response);
          }
 
          // fields set
