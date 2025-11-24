@@ -3,7 +3,7 @@
 import styles from '../styles/Evaluation.module.css';
 
 // import hooks
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 
 // import contexts
 import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
@@ -25,14 +25,7 @@ const Evaluation = () => {
 
 
    //// functions
-   useEffect(() =>{
-      console.log('evaluation data get: ')
-      console.log('total questions: ', totalQuestions);
-      console.log('correct: ', correctAnswers);
-      console.log('incorrect: ', incorrectAnswers);
-      console.log('accuracy: ', accuracy);
-      console.log('pdf path: ', PDFPath);
-   }, [ totalQuestions, correctAnswers, incorrectAnswers, accuracy, PDFPath ]);
+   
 
    // pdf download
    const handlePDFDownload = async () =>{

@@ -170,7 +170,6 @@ const QuestionsGenerated = () => {
          setAccuracy(response.accuracy);
          setPDFPath(response.pdfPath || '');
 
-         console.log('✅ Evaluation result generated with success:', response);
          modal_config({
             title: 'Sucesso ✔️', 
             msg: `🤖 Suas respostas foram enviadas 🤖 \n você será redirecionado para o relatório de avaliação...`, 

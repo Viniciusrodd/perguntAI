@@ -175,7 +175,6 @@ const Language = () => {
          setCurrentIndex(response.currentIndex ?? 0);
          setFinished(response.finished ?? false);
 
-         console.log('✅ question generation success:', response);
          modal_config({
             title: 'Sucesso ✔️', 
             msg: `🤖 Suas questões foram geradas 🤖 \n você será redirecionado para elas...`, 
