@@ -2,9 +2,34 @@
 // import css
 import styles from '../styles/Evaluation.module.css';
 
+// import hooks
+import { useEffect, useContext } from 'react';
+
+// import contexts
+import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
+
 
 // evaluation
 const Evaluation = () => {
+   //// variables
+   const { 
+      totalQuestions,
+      correctAnswers,
+      incorrectAnswers,
+      accuracy
+   } = useContext(EvaluationContext);
+
+
+   //// functions
+   useEffect(() =>{
+      console.log('evaluation data get: ')
+      console.log(totalQuestions, correctAnswers, incorrectAnswers, accuracy);
+   }, [ totalQuestions, correctAnswers, incorrectAnswers, accuracy ]);
+
+
+   //// jsx
+
+
    return (
       <div className={ styles.evaluation_container }>
          <h1 className={ styles.title }>
@@ -17,7 +42,9 @@ const Evaluation = () => {
             </h2>
 
             <div className={ styles.precision }>
-               <h1>75%</h1>
+               <h1>
+                  { accuracy }%
+               </h1>
             </div>
          </div>
 
@@ -25,23 +52,31 @@ const Evaluation = () => {
             <div className={ styles.data }>
                <h1>Total de questões</h1>
                <h1 className={ styles.h1_space }>...........................</h1>
-               <h1>4</h1>
+               <h1>
+                  { totalQuestions }
+               </h1>
             </div>
+
             <div className={ styles.data }>
                <h1 className={ styles.data_correct }>Questões corretas</h1>
                <h1 className={ styles.h1_space }>...........................</h1>
-               <h1 className={ styles.data_correct }>3</h1>
+               <h1 className={ styles.data_correct }>
+                  { correctAnswers }
+               </h1>
             </div>
+            
             <div className={ styles.data }>
                <h1 className={ styles.data_incorrect }>Questões incorretas</h1>
                <h1 className={ styles.h1_space }>.........................</h1>
-               <h1 className={ styles.data_incorrect }>1</h1>
+               <h1 className={ styles.data_incorrect }>
+                  { incorrectAnswers }
+               </h1>
             </div>
          </div>
 
          <div className={ styles.pdf_container }>
             <h2>
-               Gerar PDF com detalhes da avaliação ?
+               Gerar PDF com + detalhes da avaliação ?
             </h2>
 
             <button 

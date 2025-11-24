@@ -49,7 +49,7 @@
       border: 3px solid var(--color4);
 
       & h1{
-         font-size: 25px;
+         font-size: 23px;
          color: var(--color4);
          margin: 0px;
       }
@@ -73,7 +73,7 @@
 
       & h1{
          font-style: italic;
-         font-size: 26px;
+         font-size: 25px;
          margin: 0px 10px;
       }
 

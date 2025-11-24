@@ -40,7 +40,7 @@ class QuestionService {
       answers: iAnswerGenerationReqBody
    ): Promise<iEvaluationResult>{
       const res = await axios.post('http://localhost:5111/answers', answers);
-      return res.data;
+      return res.data.data;
    };
 
 };

@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 // import context
 import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSession.context';
 import { LoadingContext } from '../contexts/Loading/Loading.context';
+import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
 
 // import conmponents
 import MultipleChoiceQuestions from '../components/questionsGenerated/MultipleChoiceQuestions';
@@ -49,7 +50,13 @@ const QuestionsGenerated = () => {
    // contexts
    const { sessionId, questionSet, answers, finished } = useContext(QuestionSessionContext);
    const { loading, setLoading } = useContext(LoadingContext);
-   
+   const { 
+      setTotalQuestions, 
+      setCorrectAnswers, 
+      setIncorrectAnswers, 
+      setAccuracy 
+   } = useContext(EvaluationContext);
+
 
    //// functions
 
@@ -154,6 +161,12 @@ const QuestionsGenerated = () => {
          if(!response){
             console.error('⚠️ Unexpected return from API:', response);
          }
+
+         // fields set
+         setTotalQuestions(response.totalQuestions);
+         setCorrectAnswers(response.correctAnswers);
+         setIncorrectAnswers(response.incorrectAnswers);
+         setAccuracy(response.accuracy);
 
          console.log('✅ Evaluation result generated with success:', response);
          modal_config({
