@@ -7,6 +7,7 @@ import App from './App.tsx'
 import { OptionsProvider } from './contexts/QuestionsOptions/Options.provider.tsx'
 import { QuestionSessionProvider } from './contexts/QuestionSession/QuestionSession.provider.tsx'
 import { LoadingProvider } from './contexts/Loading/Loading.provider.tsx'
+import { EvaluationProvider } from './contexts/Evaluation/Evaluation.provider.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -14,9 +15,11 @@ createRoot(document.getElementById('root')!).render(
       <OptionsProvider>
          <QuestionSessionProvider>
             <LoadingProvider>
+               <EvaluationProvider>
 
-               <App />
-            
+                  <App />
+               
+               </EvaluationProvider>
             </LoadingProvider>
          </QuestionSessionProvider>
       </OptionsProvider>
