@@ -8,6 +8,9 @@ import { useEffect, useContext } from 'react';
 // import contexts
 import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
 
+// import services
+import { pdfService } from '../services/pdf.service';
+
 
 // evaluation
 const Evaluation = () => {
@@ -30,6 +33,17 @@ const Evaluation = () => {
       console.log('accuracy: ', accuracy);
       console.log('pdf path: ', PDFPath);
    }, [ totalQuestions, correctAnswers, incorrectAnswers, accuracy, PDFPath ]);
+
+   // pdf download
+   const handlePDFDownload = async () =>{
+      try{
+         await pdfService.pdfDownload(PDFPath);
+         console.log('✔️ Downloading starting...');
+      }
+      catch(error){
+         console.error('❌ Error at handle downloading PDF', error);
+      }
+   };
 
 
    //// jsx
@@ -87,6 +101,7 @@ const Evaluation = () => {
             <button 
                type='button'
                className={ styles.btt_pdf }
+               onClick={ handlePDFDownload }
             >
                GERAR
             </button>
