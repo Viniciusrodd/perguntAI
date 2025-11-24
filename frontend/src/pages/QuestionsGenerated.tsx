@@ -54,7 +54,8 @@ const QuestionsGenerated = () => {
       setTotalQuestions, 
       setCorrectAnswers, 
       setIncorrectAnswers, 
-      setAccuracy 
+      setAccuracy,
+      setPDFPath
    } = useContext(EvaluationContext);
 
 
@@ -167,6 +168,7 @@ const QuestionsGenerated = () => {
          setCorrectAnswers(response.correctAnswers);
          setIncorrectAnswers(response.incorrectAnswers);
          setAccuracy(response.accuracy);
+         setPDFPath(response.pdfPath || '');
 
          console.log('✅ Evaluation result generated with success:', response);
          modal_config({

@@ -18,13 +18,15 @@ export const EvaluationProvider = ({ children }: EvaluationPropsProvider) =>{
    const [ correctAnswers, setCorrectAnswers ] = useState<number>(0);
    const [ incorrectAnswers, setIncorrectAnswers ] = useState<number>(0);
    const [ accuracy, setAccuracy ] = useState<number>(0);
+   const [ PDFPath, setPDFPath ] = useState<string>('');
 
    return(
       <EvaluationContext.Provider value={{
          totalQuestions, setTotalQuestions,
          correctAnswers, setCorrectAnswers,
          incorrectAnswers, setIncorrectAnswers,
-         accuracy, setAccuracy
+         accuracy, setAccuracy,
+         PDFPath, setPDFPath
       }}>
          { children }
       </EvaluationContext.Provider>

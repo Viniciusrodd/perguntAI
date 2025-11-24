@@ -16,15 +16,20 @@ const Evaluation = () => {
       totalQuestions,
       correctAnswers,
       incorrectAnswers,
-      accuracy
+      accuracy,
+      PDFPath
    } = useContext(EvaluationContext);
 
 
    //// functions
    useEffect(() =>{
       console.log('evaluation data get: ')
-      console.log(totalQuestions, correctAnswers, incorrectAnswers, accuracy);
-   }, [ totalQuestions, correctAnswers, incorrectAnswers, accuracy ]);
+      console.log('total questions: ', totalQuestions);
+      console.log('correct: ', correctAnswers);
+      console.log('incorrect: ', incorrectAnswers);
+      console.log('accuracy: ', accuracy);
+      console.log('pdf path: ', PDFPath);
+   }, [ totalQuestions, correctAnswers, incorrectAnswers, accuracy, PDFPath ]);
 
 
    //// jsx
