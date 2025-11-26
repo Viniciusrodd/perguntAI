@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 // import contexts
 import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
+import { QuestionSessionContext } from '../contexts/QuestionSession/QuestionSession.context';
+import { OptionsContext } from '../contexts/QuestionsOptions/Options.context';
 
 // import services
 import { pdfService } from '../services/pdf.service';
@@ -19,6 +21,10 @@ import Modal from '../components/Modal';
 import type { 
    iModalConfig 
 } from '../../../shared/interfaces/modal.interface';
+
+// import types for - question session context
+import { questionSetInitValues } from '../contexts/QuestionSession/QuestionSession.context';
+import { initialAnswers } from '../contexts/QuestionSession/QuestionSession.context';
 
 
 // evaluation
@@ -42,6 +48,18 @@ const Evaluation = () => {
       accuracy, setAccuracy,
       PDFPath, setPDFPath
    } = useContext(EvaluationContext);
+
+   const { 
+      setSessionId, setQuestionSet,
+      setAnswers, setCurrentIndex,
+      setFinished 
+   } = useContext(QuestionSessionContext); 
+
+   const { 
+      setNumQuestions, setDifficulty,
+      setQuestionType, setLanguage,
+      setText
+   } = useContext(OptionsContext);
 
 
    //// functions
@@ -75,8 +93,8 @@ const Evaluation = () => {
          if (!redirect) {
             window.history.pushState(null, '', window.location.href);
             modal_config({
-               title: '❗ Espere', 
-               msg: `❗ Você não pode voltar uma vez que esteja na avaliação`, 
+               title: 'Espere ❗', 
+               msg: `Você não pode voltar uma vez que esteja no \n relatório de avaliação`, 
                btt1: false, btt2: 'fechar', display: true
             });
          }
@@ -95,18 +113,38 @@ const Evaluation = () => {
 
    // reset all contexts
    const resetAllContexts = useCallback(() => {
+      // evaluation context
       setTotalQuestions(0);
       setCorrectAnswers(0);
       setIncorrectAnswers(0);
       setAccuracy(0);
       setPDFPath('');
+
+      // question session context
+      setSessionId('');
+      setQuestionSet(questionSetInitValues);
+      setAnswers(initialAnswers);
+      setCurrentIndex(0);
+      setFinished(false);
+
+      // options context
+      setNumQuestions(0);
+      setDifficulty('basic');
+      setQuestionType('open');
+      setLanguage('');
+      setText('');
    }, 
    [ 
-      setTotalQuestions, 
-      setCorrectAnswers,
-      setIncorrectAnswers, 
-      setAccuracy, 
-      setPDFPath
+      setTotalQuestions, setCorrectAnswers,
+      setIncorrectAnswers, setAccuracy, setPDFPath,
+
+      setSessionId, setQuestionSet,
+      setAnswers, setCurrentIndex,
+      setFinished,
+
+      setNumQuestions, setDifficulty,
+      setQuestionType, setLanguage,
+      setText
    ]);
    
 

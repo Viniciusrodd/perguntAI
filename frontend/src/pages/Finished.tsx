@@ -18,7 +18,6 @@ const Finished = () => {
    const redirect = () =>{
       navigate('/');
    };
-   
 
 
    //// jsx

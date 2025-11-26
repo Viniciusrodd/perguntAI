@@ -26,7 +26,7 @@ export type QuestionSessionContextType = {
 
 
 // questions set values - for questions session context
-const questionSetInitValues: iQuestionsSet = {
+export const questionSetInitValues: iQuestionsSet = {
    // states
    id: '',
    material: {
@@ -45,7 +45,7 @@ const questionSetInitValues: iQuestionsSet = {
 
 
 // answers set values - for questions session context
-const initialAnswers: iUserAnswer[] = [];
+export const initialAnswers: iUserAnswer[] = [];
 
 
 // questions session context
