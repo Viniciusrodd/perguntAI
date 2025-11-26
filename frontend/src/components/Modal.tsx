@@ -14,9 +14,6 @@ const Modal: React.FC<iModal> = ({ title, msg, btt1, btt2, display, modalEvent, 
    return (
       <div className={ display ? styles.modal : styles.hidden }>
          <div className={ styles.modal_content }>
-            <span onClick={ onClose } className={ `${styles.close_button} ${styles.span_btt}` }>
-               &times;
-            </span>
             <h2 className={styles.h2_modal }>
                { title }
             </h2>
