@@ -17,8 +17,7 @@ import Modal from '../components/Modal';
 
 
 // welcome
-const Welcome = () => {
-   
+const Welcome = () => {   
    //// variables
    const navigate = useNavigate();
    const [ modal_display, setModal_display ] = useState<boolean>(false);

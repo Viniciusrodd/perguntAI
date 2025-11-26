@@ -3,7 +3,8 @@
 import styles from '../styles/Evaluation.module.css';
 
 // import hooks
-import { useContext } from 'react';
+import { useContext, useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // import contexts
 import { EvaluationContext } from '../contexts/Evaluation/Evaluation.context';
@@ -16,22 +17,56 @@ import { pdfService } from '../services/pdf.service';
 const Evaluation = () => {
    //// variables
    const { 
-      totalQuestions,
-      correctAnswers,
-      incorrectAnswers,
-      accuracy,
-      PDFPath
+      totalQuestions, setTotalQuestions,
+      correctAnswers, setCorrectAnswers,
+      incorrectAnswers, setIncorrectAnswers,
+      accuracy, setAccuracy,
+      PDFPath, setPDFPath
    } = useContext(EvaluationContext);
+   const navigate = useNavigate();
+   const [ redirect, setRedirect ] = useState<boolean>(false);
 
 
    //// functions
+
+
+   // reset all contexts
+   const resetAllContexts = useCallback(() => {
+      setTotalQuestions(0);
+      setCorrectAnswers(0);
+      setIncorrectAnswers(0);
+      setAccuracy(0);
+      setPDFPath('');
+   }, 
+   [ 
+      setTotalQuestions, 
+      setCorrectAnswers,
+      setIncorrectAnswers, 
+      setAccuracy, 
+      setPDFPath
+   ]);
    
+
+   // redirect - finished page
+   useEffect(() =>{
+      if(redirect){      
+         const timer = setTimeout(() => {
+            resetAllContexts();
+            navigate('/finished');
+         }, 2000);
+
+         return () =>{         
+            clearTimeout(timer);
+         };
+      }
+   }, [ redirect, navigate, resetAllContexts ]);
+
 
    // pdf download
    const handlePDFDownload = async () =>{
       try{
          await pdfService.pdfDownload(PDFPath);
-         console.log('✔️ Downloading starting...');
+         setRedirect(true);
       }
       catch(error){
          console.error('❌ Error at handle downloading PDF', error);

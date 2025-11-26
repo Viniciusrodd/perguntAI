@@ -9,6 +9,7 @@ import Welcome from './pages/Welcome';
 import Homepage from './pages/Homepage';
 import QuestionsGenerated from './pages/QuestionsGenerated';
 import Evaluation from './pages/Evaluation';
+import Finished from './pages/Finished';
 
 
 // app
@@ -25,6 +26,8 @@ function App() {
                <Route path='/questions/:sessionID' element={ <QuestionsGenerated /> } />
                {/* evaluation page */}
                <Route path='/evaluation' element={ <Evaluation /> } />
+               {/* finished page */}
+               <Route path='/finished' element={ <Finished /> } />
 
                { /* not found route */ }
                <Route path='*' element={ <Welcome /> } />
