@@ -7,7 +7,11 @@ Após responder as questões, o usuário recebe uma **avaliação completa** e p
 ![Welcome page do projeto](./frontend/public/images/readme/welcome.png)
 
 
-Tudo acontece **localmente**, mantendo privacidade total e execução extremamente rápida — sem enviar nenhum dado para a nuvem.
+Tudo acontece **localmente**
+- 🔒 mantendo **privacidade total**, 
+- ⚡ **execução extremamente rápida**
+- ☁️ sem enviar **nenhum dado para a nuvem**.
+- 💯 com tudo podendo rodar **offline**
 
 
 ## 🌟 Propósito do projeto
@@ -82,12 +86,12 @@ Frontend modular, organizado por features, espelhando a arquitetura do backend.
 
 ## ✨ Requisitos Funcionais (resumo)
 
-- Inserir texto e gerar exercícios (RF01)
-- Configurar quantidade, tipo, dificuldade e linguagem (RF02)
-- Validar respostas (RF02 - Grupo 2)
-- Exibir resumo de desempenho (RF03)
-- Gerar PDF com estatísticas e conteúdo (RF03)
-- Conectar ao Ollama local (Grupo 4)
+- Inserir texto e gerar exercícios
+- Configurar quantidade, tipo, dificuldade e linguagem
+- Validar respostas
+- Exibir resumo de desempenho
+- Gerar PDF com estatísticas e conteúdo
+- Conectar ao Ollama local
 
 
 ## ⚙️ Requisitos Não Funcionais
@@ -98,7 +102,6 @@ Frontend modular, organizado por features, espelhando a arquitetura do backend.
 - 🖥️ Funciona em qualquer navegador moderno
 - 🔒 Zero envio de dados para servidores externos
 - 🧩 Código modular e extensível
-- 💻 Compatível com Windows, Linux e macOS
 
 
 ## 🌍 Objetivo Open-Source
@@ -114,6 +117,182 @@ Novas features futuras incluem:
 
 - 🎨 tema claro/escuro  
 - 🧪 novos tipos de exercícios  
-- 🤖 suporte a diferentes LLMs no Ollama  
+- 🤖 suporte a diferentes LLMs no Ollama
 
 ---
+
+### 🚀 Como instalar e executar o projeto (Windows)
+
+O perguntAI foi projetado para ser extremamente simples de instalar.
+
+Você terá dois arquivos .bat na raiz do projeto:
+
+- **install-perguntai.bat** → instala e prepara o ambiente
+- **start-perguntai.bat** → inicia tudo automaticamente
+
+O usuário **não precisa entender de programação** — basta seguir alguns passos simples.
+
+
+## 📦 1. Pré-requisitos
+
+Antes de instalar, é necessário ter instalado:
+
+- **✔ Node.js (LTS)**: https://nodejs.org/en/download
+- **✔ Git**: https://git-scm.com/downloads
+- **✔ Ollama (obrigatório)**: https://ollama.com/download
+
+O Ollama é o serviço responsável por rodar o modelo Mistral localmente.
+
+
+## 📥 2. Baixe ou clone o repositório
+
+### 🔽 Download ZIP
+
+- Clique em Code → Download ZIP
+- Depois, extraia o projeto em uma pasta local (por exemplo: **C:\perguntai**).
+
+### 🧪 Ou clone via Git
+
+``` bash
+   git clone https://github.com/seu-usuario/perguntai.git
+   cd perguntai
+```
+
+## ⚙️ 3. Instale tudo com 1 clique
+
+Na pasta raiz, execute:
+
+``` bash
+   install_perguntAI.bat
+```
+
+Esse instalador irá: 
+
+- ✔️ Verificar se **Node, npm e Ollama** estão **instalados**
+- ✔️ Instalar **dependências do backend**
+- ✔️ Instalar **dependências do frontend**
+- ✔️ Validar que o projeto está **pronto para rodar**
+
+Se faltar algo, ele mostrará exatamente o que instalar.
+
+
+## ▶️ 4. Iniciando o projeto (modo automático)
+
+Depois da instalação, execute:
+
+``` bash
+   start_perguntAI.bat
+```
+
+Esse script:
+
+- 🧠 inicia o Ollama Server
+- 🖥️ inicia o backend
+- 🌐 inicia o frontend
+- 📌 cria automaticamente um atalho na área de trabalho (somente na primeira execução)
+- 🌍 abre o navegador em http://localhost:5173/
+- 🔄 reinicia serviços automaticamente se estiverem ocupando as portas
+
+Você verá três janelas separadas:
+
+``` bash
+   1 — Servidor Ollama (ollama serve)
+   2 — Backend (Node + Express)
+   3 — Frontend (React + Vite)
+```
+
+Basta não fechar essas janelas enquanto estiver usando o sistema.
+
+
+## 🧭 5. Acessando o sistema
+
+Ao rodar o script, o navegador abrirá automaticamente:
+
+- 👉 http://localhost:5173/
+
+Caso prefira abrir manualmente, use o atalho:
+
+- 📌 **PerguntAI.lnk** criado na **Mesa/Área de Trabalho**.
+
+
+## 🛑 6. Como parar o sistema
+
+Para encerrar tudo corretamente:
+
+- feche a janela "Ollama Server"
+- feche a janela "PerguntAI Backend"
+- feche a janela "PerguntAI Frontend"
+
+Ou simplesmente:
+
+``` bash
+   CTRL + C
+```
+
+em cada terminal.
+
+
+## 🔄 7. Como atualizar o projeto
+
+Se baixar uma nova versão do GitHub:
+
+- Baixe/extraia novamente
+- Substitua a pasta antiga
+- Execute novament
+
+``` bash
+   install-perguntai.bat
+```
+
+para reinstalar dependências que possam ter mudado.
+
+
+## 🛠️ 8. Problemas comuns (e como resolver)
+
+### ❌ Erro: “Ollama não encontrado”
+
+Instale o Ollama pelo site e reinicie o PC.
+
+
+### ❌ Erro: “Porta 5173 já está em uso”
+
+O script já mata a porta automaticamente, mas se falhar:
+
+```bash
+   taskkill /F node.exe /IM
+```
+
+
+### ❌ Vite não inicia / branco na tela
+
+Rode manualmente:
+
+```bash
+   cd frontend
+   npm install
+   npm run dev
+```
+
+
+### ❌ Backend não inicia
+
+Rode manualmente:
+
+```bash
+   cd backend
+   npm install
+   npm run dev
+```
+
+
+## 💬 9. Suporte e contribuições
+
+Sinta-se à vontade para:
+
+- abrir issues
+- enviar PRs
+- sugerir melhorias
+- propor novos tipos de exercícios
+- integrar novos modelos
+
+### A comunidade é bem-vinda aqui 🤙
