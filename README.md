@@ -3,9 +3,11 @@
 O **perguntAI** é uma plataforma interativa que transforma qualquer texto de estudo em **listas de exercícios geradas automaticamente** por uma LLM rodando localmente (via **Ollama Mistral**).  
 Após responder as questões, o usuário recebe uma **avaliação completa** e pode **baixar um PDF** com o desempenho.
 
+---
 
 ![Welcome page do projeto](./frontend/public/images/readme/welcome.png)
 
+---
 
 Tudo acontece **localmente**
 - 🔒 mantendo **privacidade total**, 
@@ -40,6 +42,8 @@ O objetivo do perguntAI é oferecer uma ferramenta moderna para estudos:
   - Respostas corretas
   - Estatísticas de acertos e erros
 
+---
+
 ![questões geradas](./frontend/public/images/readme/questões_geradas.png)
 
 ---
@@ -50,6 +54,7 @@ O objetivo do perguntAI é oferecer uma ferramenta moderna para estudos:
 
 ![pdf de avaliação](./frontend/public/images/readme/pdf.png)
 
+---
 
 ## 📚 Modelagem de Dados (sem banco de dados)
 
