@@ -83,7 +83,7 @@ Frontend modular, organizado por features, espelhando a arquitetura do backend.
 
 - **React 19 + Vite**
 - **React Router DOM 7**
-- **Context API + Reducer** para gerenciamento de sessão
+- **Context API** para gerenciamento de sessão
 - **Axios** para comunicação com o backend
 - **Componentes desacoplados** prontos para expansão
 - **UI responsiva** seguindo os requisitos de usabilidade
