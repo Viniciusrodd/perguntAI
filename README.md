@@ -159,8 +159,8 @@ O Ollama é o serviço responsável por rodar o modelo Mistral localmente.
 ### 🧪 Ou clone via Git
 
 ``` bash
-   git clone https://github.com/seu-usuario/perguntai.git
-   cd perguntai
+   git clone https://github.com/Viniciusrodd/perguntAI.git
+   cd perguntAI
 ```
 
 ## ⚙️ 3. Instale tudo com 1 clique
@@ -246,7 +246,7 @@ Se baixar uma nova versão do GitHub:
 - Execute novament
 
 ``` bash
-   install-perguntai.bat
+   install-perguntAI.bat
 ```
 
 para reinstalar dependências que possam ter mudado.
