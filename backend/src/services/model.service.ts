@@ -38,7 +38,7 @@ class ModelService {
 
          // get model response
          const llm_response = await axios.post(process.env.OLLAMA_URL as string, {
-            'model': 'mistral',
+            'model': 'mistral:7b-instruct-q4_0',
             'prompt': prompt,
             'stream': false
          });
