@@ -14,4 +14,4 @@ export interface iEvaluationResult {
    questionSet: iQuestionsSet;
    userAnswers: iUserAnswer[];
    pdfPath?: string;
-};
+}

@@ -5,13 +5,13 @@ export interface iGenerationOptions {
    difficulty: 'basic' | 'intermediate' | 'advanced';
    questionType: 'open' | 'multipleChoice' | 'mix';
    language?: string;
-};
+}
 
 // study material - user question text
 export interface iStudyMaterial {
    text: string;
    createdAt?: String;
-};
+}
 
 // user answer - user indivual questions response
 export interface iUserAnswer {
@@ -19,4 +19,4 @@ export interface iUserAnswer {
    userResponse: string;
    isCorrect: boolean;
    feedback?: string;
-};
+}

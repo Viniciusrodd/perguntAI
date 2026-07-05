@@ -6,7 +6,7 @@ import type { iQuestionSession } from './model.interfaces';
 export interface iUserResponse {
    questionId: string;
    userResponse: string
-};
+}
 
 // Answer Generation Request Body
 export interface iAnswerGenerationReqBody {

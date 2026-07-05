@@ -5,4 +5,4 @@ export interface iApiResponse<T = any>{
    data?: T; 
    document?: string;
    errorMessage?: string;
-};
+}

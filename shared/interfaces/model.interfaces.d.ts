@@ -12,7 +12,7 @@ export interface iQuestion {
    acceptableAnswers: string[]; // correct answers
    type: 'open' | 'multipleChoice' | 'mix';
    choices?: string[];
-};
+}
 
 
 // questionsSet - questions list generates by IA
@@ -22,7 +22,7 @@ export interface iQuestionsSet {
    options: iGenerationOptions;
    questions: iQuestion[];
    generatedAt: String;
-};
+}
 
 
 // exercise session - questions set + user answers 
@@ -32,4 +32,4 @@ export interface iQuestionSession {
    answers: iUserAnswer[];
    currentIndex: number;
    finished: boolean;
-};
+}
