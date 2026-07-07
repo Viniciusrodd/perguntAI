@@ -37,8 +37,10 @@ class ModelService {
          const prompt: string = prompt_question(questionOptions, studyMaterial);
 
          // get model response
-         const llm_response = await axios.post(process.env.OLLAMA_URL as string, {
-            'model': 'mistral:7b-instruct-q4_0',
+         const llm_response = await axios.post(
+            process.env.AMBIENCE === 'dev' ? process.env.OLLAMA_URL_DEV as string : process.env.OLLAMA_URL_PRODUCTION as string, 
+         {
+            'model': process.env.AMBIENCE === 'dev' ? 'mistral' : 'mistral:7b-instruct-q4_0',
             'prompt': prompt,
             'stream': false
          });
@@ -83,8 +85,10 @@ class ModelService {
          );
 
          // get model response
-         const llm_response = await axios.post(process.env.OLLAMA_URL as string, {
-            'model': 'mistral',
+         const llm_response = await axios.post(
+            process.env.AMBIENCE === 'dev' ? process.env.OLLAMA_URL_DEV as string : process.env.OLLAMA_URL_PRODUCTION as string, 
+         {
+            'model': process.env.AMBIENCE === 'dev' ? 'mistral' : 'mistral:7b-instruct-q4_0',
             'prompt': prompt,
             'stream': false
          });

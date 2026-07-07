@@ -15,7 +15,7 @@ export async function ollamaMiddleware(
    next: NextFunction
 ): Promise<void | Response> {
    try{
-      await axios.get(process.env.OLLAMA_CHECK_URL!, { timeout: 0 });
+      await axios.get(process.env.AMBIENCE === 'dev' ? process.env.OLLAMA_CHECK_URL_DEV as string : process.env.OLLAMA_CHECK_URL_PRODUCTION as string, { timeout: 0 });
       next();
    }
    catch(error: unknown){
