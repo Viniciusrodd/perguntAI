@@ -9,6 +9,9 @@ import { iQuestionSession } from "@interfaces/model.interfaces";
 import { iEvaluationResult } from "@interfaces/pdf.interfaces";
 import { iAnswerGenerationReqBody } from '@interfaces/userController.interfaces';
 
+// import error handler
+import { getErrorMessage } from "@root/utils/errorHandler";
+
 // import services
 import { modelService } from "@root/services/model.service";
 import { pdfService } from "@root/services/pdf.service";
@@ -22,42 +25,53 @@ class UserController {
       req: Request<{}, {}, iAnswerGenerationReqBody>,
       res: Response<iApiResponse>
    ): Promise<Response> {
-      // validation the requests
-      const { 
-         userResponses, // iUserResponse[]
-         questionSession, // iQuestionSession
-      } = req.body;
+      try{
+         // validation the requests
+         const { 
+            userResponses, // iUserResponse[]
+            questionSession, // iQuestionSession
+         } = req.body;
 
-      if(!userResponses || userResponses.length == 0 || !questionSession){
-         return res.status(404).send({
-            success: false,
-            message: '❌ Bad request at fields sended'
-         }); 
+         if(!userResponses || userResponses.length == 0 || !questionSession){
+            return res.status(404).send({
+               success: false,
+               message: '❌ Bad request at fields sended'
+            }); 
+         }
+
+         // call ollama request service...
+         const userAnswer: iUserAnswer[] = await modelService.ollamaAnswerRequest(
+            userResponses, 
+            questionSession
+         );
+
+         // set finished question session
+         const finishQuestionSession: iQuestionSession = {
+            sessionId: questionSession.sessionId,
+            questionSet: questionSession.questionSet,
+            answers: userAnswer,
+            currentIndex: questionSession.currentIndex,
+            finished: true
+         };
+
+         // call session finish
+         const evaluationResult: iEvaluationResult = await this.sessionFinish(finishQuestionSession);
+
+         return res.status(200).send({
+            success: true,
+            message: '✔️ Evaluation result successfully generated',
+            data: evaluationResult
+         });
       }
+      catch(error){
+         console.error('❌ Internal server error at Answers Generation', error);
 
-      // call ollama request service...
-      const userAnswer: iUserAnswer[] = await modelService.ollamaAnswerRequest(
-         userResponses, 
-         questionSession
-      );
-
-      // set finished question session
-      const finishQuestionSession: iQuestionSession = {
-         sessionId: questionSession.sessionId,
-         questionSet: questionSession.questionSet,
-         answers: userAnswer,
-         currentIndex: questionSession.currentIndex,
-         finished: true
-      };
-
-      // call session finish
-      const evaluationResult: iEvaluationResult = await this.sessionFinish(finishQuestionSession);
-
-      return res.status(200).send({
-         success: true,
-         message: '✔️ Evaluation result successfully generated',
-         data: evaluationResult
-      });
+         return res.status(500).send({
+            success: false,
+            message: '❌ Internal server error at Answers Generation',
+            errorMessage: getErrorMessage(error)
+         });
+      }
    };
 
 

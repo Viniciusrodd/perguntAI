@@ -7,9 +7,6 @@ import { iUserAnswer, iGenerationOptions, iStudyMaterial } from "@interfaces/use
 import { iQuestion, iQuestionsSet, iQuestionSession } from "@interfaces/model.interfaces";
 import { iUserResponse } from "@interfaces/userController.interfaces";
 
-// import error handler
-import { getErrorMessage } from "@root/utils/errorHandler";
-
 // import utils
 import { prompt_question, prompt_answer } from "@utils/prompts";
 
@@ -21,7 +18,32 @@ dotenv.config({});
 
 // model service - class
 class ModelService {
-   getErrorMessage = getErrorMessage;
+
+   // util - extract json
+   private extractJson(text: string): string {
+
+      const clean = text
+         .replace(/```json/gi, "")
+         .replace(/```/g, "")
+         .trim();
+
+      const startArray = clean.indexOf("[");
+      const endArray = clean.lastIndexOf("]");
+
+      if(startArray !== -1 && endArray !== -1){
+         return clean.slice(startArray, endArray + 1);
+      }
+
+      const startObject = clean.indexOf("{");
+      const endObject = clean.lastIndexOf("}");
+
+      if(startObject !== -1 && endObject !== -1){
+         return clean.slice(startObject, endObject + 1);
+      }
+
+      throw new Error("ExtractJson error - JSON not found");
+   }
+
 
    // ollama question request - public
    public async ollamaQuestionRequest(
@@ -48,16 +70,20 @@ class ModelService {
          ? llm_response.data
          : llm_response.data.response;
 
-         // clean result
-         const clean = result.trim();
+         console.log("===== RAW RESPONSE =====");
+         console.log(result);
+         console.log("========================");
+
+         // extract json call
+         const clean = this.extractJson(result);
 
          // convert clean result to object
          const parsedResult: iQuestion[] = JSON.parse(clean);
          return parsedResult;
       }
       catch(error: unknown){
-         console.error('Ollama question request service internal error', this.getErrorMessage(error));
-         return [];
+         console.error('Ollama question request service internal error', error);
+         throw new Error(`Ollama question request service internal error: ${error}`);
       }
    };
 
@@ -104,8 +130,8 @@ class ModelService {
          return parsedResult;
       }
       catch(error: unknown){
-         console.error('Ollama answer service internal error', this.getErrorMessage(error));
-         throw new Error(`Ollama answer service internal error: ${this.getErrorMessage(error)}`);
+         console.error('Ollama answer service internal error', error);
+         throw new Error(`Ollama answer service internal error: ${error}`);
       }
    };
 

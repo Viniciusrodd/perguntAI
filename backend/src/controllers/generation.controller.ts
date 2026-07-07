@@ -8,6 +8,9 @@ import { iGenerationOptions, iStudyMaterial } from "@interfaces/user.interfaces"
 import { iApiResponse } from "@interfaces/apiResponse.interface";
 import { iQuestion, iQuestionsSet, iQuestionSession } from "@interfaces/model.interfaces";
 
+// import error handler
+import { getErrorMessage } from "@root/utils/errorHandler";
+
 // import services
 import { modelService } from "@root/services/model.service";
 
@@ -35,39 +38,50 @@ class GenerationController {
       req: Request, 
       res: Response<iApiResponse>
    ): Promise<Response> {
-      // call private building methods...
-      await this.generationOptions(req, res);
-      await this.generationMaterial(req, res);
-
-      // call ollama request service with question set...
-      const questions: iQuestion[] = await modelService.ollamaQuestionRequest(
-         this.questionOptions, 
-         this.studyMaterial
-      );
-
-      // final questions set
-      const questionSet: iQuestionsSet = {
-         id: uuid(),
-         material: this.studyMaterial,
-         options: this.questionOptions,
-         questions,
-         generatedAt: new Date().toISOString().split('T')[0]
+      try{
+         // call private building methods...
+         await this.generationOptions(req, res);
+         await this.generationMaterial(req, res);
+   
+         // call ollama request service with question set...
+         const questions: iQuestion[] = await modelService.ollamaQuestionRequest(
+            this.questionOptions, 
+            this.studyMaterial
+         );
+   
+         // final questions set
+         const questionSet: iQuestionsSet = {
+            id: uuid(),
+            material: this.studyMaterial,
+            options: this.questionOptions,
+            questions,
+            generatedAt: new Date().toISOString().split('T')[0]
+         }
+   
+         // set question session
+         const questionSession: iQuestionSession = {
+            sessionId: uuid(),
+            questionSet,
+            answers: [],
+            currentIndex: 1,
+            finished: false
+         };
+   
+         return res.status(200).send({
+            success: true,
+            message: '✔️ Questions generated successfully',
+            data: questionSession
+         });
       }
+      catch(error){
+         console.error('❌ Internal server error at Question Generation', error);
 
-      // set question session
-      const questionSession: iQuestionSession = {
-         sessionId: uuid(),
-         questionSet,
-         answers: [],
-         currentIndex: 1,
-         finished: false
-      };
-
-      return res.status(200).send({
-         success: true,
-         message: '✔️ Questions generated successfully',
-         data: questionSession
-      });
+         return res.status(500).send({
+            success: false,
+            message: '❌ Internal server error at Question Generation',
+            errorMessage: getErrorMessage(error)
+         });
+      }
    };
 
 
