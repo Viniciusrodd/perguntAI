@@ -25,7 +25,7 @@ class PdfService {
       });
 
       // path resolves
-      const ouputDir = path.resolve(pdfConfig.outputDir);
+      const ouputDir = path.resolve(process.cwd(), "temp", "pdf");
       if(!fs.existsSync(ouputDir)){ // if output doesn't exist
          fs.mkdirSync(ouputDir, { recursive: true });
       } 

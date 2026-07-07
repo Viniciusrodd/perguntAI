@@ -9,7 +9,7 @@
    "scripts": {
       "dev": "nodemon --watch src --ext ts,js,json --exec \"ts-node -r tsconfig-paths/register src/app.ts\"",
       "test": "echo \"Error: no test specified\" && exit 1",
-      "build": "tsc && tsc-alias",
+      "build": "tsc && tsc-alias && copyfiles -u 1 src/assets/**/* dist",
       "start": "node dist/app.js"
    },
    "dependencies": {
@@ -30,6 +30,7 @@
       "@types/express": "^5.0.3",
       "@types/hpp": "^0.2.6",
       "@types/pdfkit": "^0.17.3",
+      "copyfiles": "^2.4.1",
       "ts-node": "^10.9.2",
       "tsc-alias": "^1.9.0",
       "tsconfig-paths": "^4.2.0"

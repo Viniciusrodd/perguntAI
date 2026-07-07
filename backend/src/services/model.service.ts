@@ -70,10 +70,6 @@ class ModelService {
          ? llm_response.data
          : llm_response.data.response;
 
-         console.log("===== RAW RESPONSE =====");
-         console.log(result);
-         console.log("========================");
-
          // extract json call
          const clean = this.extractJson(result);
 
@@ -122,8 +118,8 @@ class ModelService {
          ? llm_response.data
          : llm_response.data.response;
 
-         // clean result
-         const clean = result.trim();
+         // extract json call
+         const clean = this.extractJson(result);
 
          // convert clean result to object
          const parsedResult: iUserAnswer[] = JSON.parse(clean);

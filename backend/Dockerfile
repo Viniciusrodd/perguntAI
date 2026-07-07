@@ -20,5 +20,6 @@ ENV NODE_ENV=production
 COPY backend/package*.json ./
 RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
+RUN mkdir -p /app/temp/pdf
 EXPOSE 5225
 CMD ["node", "dist/app.js"]

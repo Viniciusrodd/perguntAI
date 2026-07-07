@@ -29,7 +29,7 @@ class PdfController {
       const filename = path.basename(filepath);
 
       // safe base DIR
-      const baseDir = path.join(__dirname, '..', 'temp', 'pdf');
+      const baseDir = path.join(process.cwd(), "temp", "pdf");
       const fullPath = path.join(baseDir, filename);
 
       // check file extension
