@@ -144,8 +144,8 @@ const QuestionsGenerated = () => {
          });
       });
 
-      // request body - build
-      const requestBody: iAnswerGenerationReqBody = {
+      // data - build
+      const data: iAnswerGenerationReqBody = {
          userResponses,
          questionSession: {
             sessionId,
@@ -158,7 +158,7 @@ const QuestionsGenerated = () => {
 
       // question service...
       try{
-         const response = await questionService.answersGeneration(requestBody);
+         const response = await questionService.answersGeneration(data);
          if(!response){
             console.error('⚠️ Unexpected return from API:', response);
          }
