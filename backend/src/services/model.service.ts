@@ -70,8 +70,18 @@ class ModelService {
          ? llm_response.data
          : llm_response.data.response;
 
+         /*
+         console.log("========== OLLAMA RESULT ==========");
+         console.log(result);
+         console.log("===================================");
+         */
+
          // extract json call
          const clean = this.extractJson(result);
+
+         console.log("========== JSON ==========");
+         console.log(clean);
+         console.log("==========================");
 
          // convert clean result to object
          const parsedResult: iQuestion[] = JSON.parse(clean);

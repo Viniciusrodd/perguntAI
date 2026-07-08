@@ -45,6 +45,14 @@ class UserController {
             questionSession
          );
 
+         /*
+         console.log('--------------------------------------------------------')
+         console.log(userAnswer);
+         console.log(Array.isArray(userAnswer));
+         console.log(typeof userAnswer);
+         console.log('--------------------------------------------------------')
+         */
+
          // set finished question session
          const finishQuestionSession: iQuestionSession = {
             sessionId: questionSession.sessionId,
