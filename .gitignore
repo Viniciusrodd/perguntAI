@@ -1,7 +1,6 @@
 # .gitignore na raiz do projeto
 
 # Scripts específicos de Windows
-*.example.bat
 *.cmd
 
 # Arquivos temporários

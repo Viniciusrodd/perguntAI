@@ -10,33 +10,33 @@ Após responder as questões, o usuário recebe uma **avaliação completa** e p
 ---
 
 Tudo acontece **localmente**
-- 🔒 mantendo **privacidade total**, 
-- ⚡ **execução extremamente rápida**
-- ☁️ sem enviar **nenhum dado para a nuvem**.
-- 💯 com tudo podendo rodar **offline**
+- mantendo **privacidade total**, 
+- **execução extremamente rápida**
+- sem enviar **nenhum dado para a nuvem**.
+- com tudo podendo rodar **offline**
 
 
 ## 🌟 Propósito do projeto
 
 O objetivo do perguntAI é oferecer uma ferramenta moderna para estudos:
 
-- 📚 **Gerar questões automaticamente** a partir de qualquer texto.
-- 🔒 **Privacidade absoluta** — processamento 100% local.
-- ⚡ **Baixa latência** — sem dependências externas.
-- 🛠️ **Código aberto**, modular e fácil de contribuir.
-- 🧩 **Arquitetura extensível**, pronta para receber novos tipos de exercícios ou modelos de IA.
+- **Gerar questões automaticamente** a partir de qualquer texto.
+- **Privacidade absoluta** — processamento 100% local.
+- **Baixa latência** — sem dependências externas.
+- **Código aberto**, modular e fácil de contribuir.
+- **Arquitetura extensível**, pronta para receber novos tipos de exercícios ou modelos de IA.
 
 
 ## 🛠️ Funcionalidades principais
 
 ### 👤 Para o usuário
 
-- ✍️ Inserir textos, resumos ou materiais de estudo.
-- ⚙️ Selecionar quantidade/tipo de questões, dificuldade e linguagem desejada.
-- 🧠 Receber perguntas abertas, múltipla escolha ou misturado.
-- ✔️ Obter validação com base nas respostas aceitáveis.
-- 📊 Visualizar um resumo de desempenho.
-- 📄 Baixar um **PDF final** contendo:
+- Inserir textos, resumos ou materiais de estudo.
+- Selecionar quantidade/tipo de questões, dificuldade e linguagem desejada.
+- Receber perguntas abertas, múltipla escolha ou misturado.
+- Obter validação com base nas respostas aceitáveis.
+- Visualizar um resumo de desempenho.
+- Baixar um **PDF final** contendo:
   - Perguntas
   - Suas respostas
   - Respostas corretas
@@ -65,8 +65,6 @@ Toda a lógica funciona **em memória**, usando estruturas simples, transparente
 
 O backend é escrito em **Express 5**, com foco em modularidade e limpeza de camadas.
 
-### 🧩 Destaques técnicos do backend
-
 - **Express 5 + TypeScript**
 - **Axios** para comunicação com o Ollama
 - **PDFKit** para geração de PDF
@@ -78,8 +76,6 @@ O backend é escrito em **Express 5**, com foco em modularidade e limpeza de cam
 ## 🖥️ Estrutura do Frontend (React + TypeScript + Vite)
 
 Frontend modular, organizado por features, espelhando a arquitetura do backend.
-
-### 💎 Destaques técnicos do frontend
 
 - **React 19 + Vite**
 - **React Router DOM 7**
@@ -101,12 +97,12 @@ Frontend modular, organizado por features, espelhando a arquitetura do backend.
 
 ## ⚙️ Requisitos Não Funcionais
 
-- ⚡ Até **10 segundos** para gerar perguntas localmente
-- 📱 Interface responsiva e intuitiva
-- 🛡️ Tratamento de erros (Ollama offline, timeouts, etc.)
-- 🖥️ Funciona em qualquer navegador moderno
-- 🔒 Zero envio de dados para servidores externos
-- 🧩 Código modular e extensível
+- Até **10 segundos** para gerar perguntas localmente
+- Interface responsiva e intuitiva
+- Tratamento de erros (Ollama offline, timeouts, etc.)
+- Funciona em qualquer navegador moderno
+- Zero envio de dados para servidores externos
+- Código modular e extensível
 
 
 ## 🌍 Objetivo Open-Source
@@ -124,11 +120,73 @@ Novas features futuras incluem:
 - 🧪 novos tipos de exercícios  
 - 🤖 suporte a diferentes LLMs no Ollama
 
+
+## 🐋 Instalação e execução com Docker
+
+
+### Pré-requisitos
+Antes de iniciar o perguntAI, certifique-se de possuir instalado:
+- Docker Desktop
+- Git
+
+> Todos os outros serviços são executados em containers Docker.
+
 ---
 
-### 🚀 Como instalar e executar o projeto (Windows)
+### Clonar o projeto
+```bash
+- git clone https://github.com/Viniciusrodd/perguntAI.git
 
-O perguntAI foi projetado para ser extremamente simples de instalar.
+- cd perguntAI
+```
+
+---
+
+### Primeira execução
+Na primeira execução é necessário baixar o modelo utilizado pela IA.
+Abra a pasta `launcher` e execute:
+```
+install.bat
+```
+
+O instalador irá:
+- iniciar todos os containers
+- baixar o modelo `mistral:7b-instruct-q4_0`
+
+> O primeiro download pode levar alguns minutos, dependendo da velocidade da internet.
+
+---
+
+### Executando a aplicação
+Após a instalação inicial, basta executar:
+```
+start.bat
+```
+O script irá:
+- iniciar todos os containers
+- abrir automaticamente o navegador em
+```
+http://localhost:3000
+```
+
+---
+
+### Encerrando a aplicação
+Quando terminar de utilizar o perguntAI, execute:
+```
+stop.bat
+```
+Esse script interrompe todos os containers da aplicação, liberando memória e processamento da máquina.
+
+
+## ⚠️ Requisitos de hardware
+- 8 GB de RAM (mínimo)
+- 16 GB de RAM (recomendado)
+- CPU com múltiplos núcleos
+- Aproximadamente 8 GB de espaço livre para os modelos e imagens Docker
+
+
+## 🚀 Instalação e execução local (outra opção)
 
 Você terá dois arquivos .bat na raiz do projeto:
 
@@ -138,7 +196,7 @@ Você terá dois arquivos .bat na raiz do projeto:
 O usuário **não precisa entender de programação** — basta seguir alguns passos simples.
 
 
-## 📦 1. Pré-requisitos
+### Pré-requisitos
 
 Antes de instalar, é necessário ter instalado:
 
@@ -149,21 +207,21 @@ Antes de instalar, é necessário ter instalado:
 O Ollama é o serviço responsável por rodar o modelo Mistral localmente.
 
 
-## 📥 2. Baixe ou clone o repositório
+### Baixe ou clone o repositório
 
-### 🔽 Download ZIP
+#### Download ZIP
 
 - Clique em Code → Download ZIP
 - Depois, extraia o projeto em uma pasta local (por exemplo: **C:\perguntai**).
 
-### 🧪 Ou clone via Git
+#### Ou clone via Git
 
 ``` bash
    git clone https://github.com/Viniciusrodd/perguntAI.git
    cd perguntAI
 ```
 
-## ⚙️ 3. Instale tudo com 1 clique
+### Instale tudo com 1 clique
 
 Na pasta raiz, execute:
 
@@ -181,7 +239,7 @@ Esse instalador irá:
 Se faltar algo, ele mostrará exatamente o que instalar.
 
 
-## ▶️ 4. Iniciando o projeto (modo automático)
+### Iniciando o projeto (modo automático)
 
 Depois da instalação, execute:
 
@@ -209,7 +267,7 @@ Você verá três janelas separadas:
 Basta não fechar essas janelas enquanto estiver usando o sistema.
 
 
-## 🧭 5. Acessando o sistema
+### Acessando o sistema
 
 Ao rodar o script, o navegador abrirá automaticamente:
 
@@ -220,7 +278,7 @@ Caso prefira abrir manualmente, use o atalho:
 - 📌 **PerguntAI.lnk** criado na **Mesa/Área de Trabalho**.
 
 
-## 🛑 6. Como parar o sistema
+### Como parar o sistema
 
 Para encerrar tudo corretamente:
 
@@ -237,7 +295,7 @@ Ou simplesmente:
 em cada terminal.
 
 
-## 🔄 7. Como atualizar o projeto
+### Como atualizar o projeto
 
 Se baixar uma nova versão do GitHub:
 
@@ -252,7 +310,7 @@ Se baixar uma nova versão do GitHub:
 para reinstalar dependências que possam ter mudado.
 
 
-## 🛠️ 8. Problemas comuns (e como resolver)
+## Problemas comuns (e como resolver)
 
 ### ❌ Erro: “Ollama não encontrado”
 
@@ -290,7 +348,7 @@ Rode manualmente:
 ```
 
 
-## 💬 9. Suporte e contribuições
+## Suporte e contribuições
 
 Sinta-se à vontade para:
 
